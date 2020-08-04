@@ -18,7 +18,7 @@
       } else {
 
         $html .= '<li onClick=\"fill(\''.addslashes().'\')\" class=\"list-group-item\">';
-        $html .= 'Nao encontrado';
+        $html .= 'Tombo não encontrado ou este equipamento já foi emprestado.';
         $html .= "</li>";
 
       }
@@ -66,7 +66,7 @@
 
         }
     } else {
-        $html ='<tr><td>Este equipamento não foi encontrado.</td></tr>';
+        $html ='<tr><td>Tombo não encontrado ou este equipamento já foi emprestado.</td></tr>';
     }
 
     echo json_encode($html);

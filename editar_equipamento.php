@@ -21,7 +21,6 @@ if(!$equipment){
     validate_fields($req_fields);
 
    if(empty($errors)){
-       $equip_tombo  = remove_junk($db->escape($_POST['equipment-tombo']));
        $equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
        $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
        $equip_supplier   = remove_junk($db->escape($_POST['equipment-supplier']));
@@ -30,9 +29,8 @@ if(!$equipment){
        $equip_updated_by    = (int) $_SESSION['user_id'];
        $equip_updated_at    = make_date();
 
-
        $query   = "UPDATE equipments SET";
-       $query  .=" tombo ='{$equip_tombo}', specifications ='{$equip_specifications}',";
+       $query  .=" specifications ='{$equip_specifications}',";
        $query  .=" types_equip_id ='{$equip_type_equip}', supplier_id ='{$equip_supplier}', manufacturer_id ='{$equip_manufacturer}', situation_id='{$equip_situation}', updated_by='{$equip_updated_by}', updated_at='{$equip_updated_at}'";
        $query  .=" WHERE id ='{$equipment['id']}'";
        $result = $db->query($query);
@@ -76,7 +74,7 @@ if(!$equipment){
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-th-large"></i>
                       </span>
-                      <input type="text" class="form-control" name="equipment-tombo" placeholder="Número do Tombo" value="<?= (int)$equipment['tombo'] ?>" required>
+                      <input type="text" class="form-control" name="equipment-tombo"  placeholder="Número do Tombo" value="<?= (int)$equipment['tombo'] ?>" readonly>
                     </div>
                   </div>
                   <div class="col-md-9">
@@ -140,7 +138,8 @@ if(!$equipment){
                 </div>
               </div>             
               
-              <button type="submit" name="update_equipment" class="btn btn-danger">Atualizar equipamento</button>
+              <button type="submit" name="update_equipment" class="btn btn-primary">Atualizar equipamento</button>
+              <a href="equipamentos.php" class="btn btn-danger">Cancelar</a>
           </form>
          </div>
         </div>

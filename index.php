@@ -6,18 +6,18 @@
 <?php include_once('layouts/header.php'); ?>
 <div class="login-page">
     <div class="text-center">
-       <h1>Welcome</h1>
-       <p>Sign in to start your session</p>
+       <h1>STC - Inventário</h1>
+       <p>Entre para iniciar a sessão</p>
      </div>
      <?php echo display_msg($msg); ?>
       <form method="post" action="auth.php" class="clearfix">
         <div class="form-group">
-              <label for="username" class="control-label">Username</label>
-              <input type="name" class="form-control" name="username" placeholder="Username">
+              <label for="username" class="control-label">Usuário</label>
+              <input type="name" class="form-control" name="username" placeholder="usuário">
         </div>
         <div class="form-group">
-            <label for="Password" class="control-label">Password</label>
-            <input type="password" name= "password" class="form-control" placeholder="password">
+            <label for="Password" class="control-label">Senha</label>
+            <input type="password" name= "password" class="form-control" placeholder="senha">
         </div>
         <div class="form-group">
                 <button type="submit" class="btn btn-info  pull-right">Login</button>

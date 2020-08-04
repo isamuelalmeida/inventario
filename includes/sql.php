@@ -212,13 +212,30 @@ function tableExists($table){
    }
 
   /*--------------------------------------------------------------*/
+  /* Function for Validate tombo of equipment
+  /*--------------------------------------------------------------*/
+   function validate_tombo($equipment_tombo){
+     global $db;
+     $sql = "SELECT tombo FROM equipments WHERE tombo = $equipment_tombo";
+     $result = find_by_sql($sql);
+
+     if(empty($result)){
+      return false;
+     }
+     
+     return true;
+   }
+
+  /*--------------------------------------------------------------*/
   /* Function for Finding all equipment name
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/
    function find_equipment_by_tombo($equipment_tombo){
      global $db;
      $e_tombo = remove_junk($db->escape($equipment_tombo));
-     $sql = "SELECT tombo FROM equipments WHERE tombo like '%$e_tombo%' LIMIT 5";
+     $sql  = "SELECT tombo FROM equipments e";
+     $sql .= " INNER JOIN loans l ON l.equipment_id <> e.id";
+     $sql .= " WHERE tombo like '%$e_tombo%' LIMIT 5";
      $result = find_by_sql($sql);
      return $result;
    }
@@ -229,9 +246,9 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_all_equipment_info_by_tombo($tombo){
     global $db;
-    $sql  = "SELECT * FROM equipments ";
+    $sql  = "SELECT * FROM equipments e";
+    $sql .= " INNER JOIN loans l ON l.equipment_id <> e.id";
     $sql .= " WHERE tombo ='{$tombo}'";
-    $sql .=" LIMIT 1";
     return find_by_sql($sql);
   }
 

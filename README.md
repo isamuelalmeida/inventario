@@ -1,4 +1,4 @@
-## Sistma de Gerenciamento Invetário
+## Sistema de Gerenciamento de Invetário
 
 ### Informações do Projeto
 
