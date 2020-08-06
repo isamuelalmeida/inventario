@@ -4,8 +4,8 @@
 // -----------------------------------------------------------------------
 // DEFINE DEFAULT TIMEZONE
 // -----------------------------------------------------------------------
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Fortaleza');
-
 
 // -----------------------------------------------------------------------
 // DEFINE SEPERATOR ALIASES

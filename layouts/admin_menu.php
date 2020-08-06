@@ -61,8 +61,8 @@
       <span>Usuários</span>
     </a>
     <ul class="nav submenu">
-      <li><a href="group.php">Gerenciar Grupos</a> </li>
-      <li><a href="users.php">Gerenciar Usuários</a> </li>
+      <li><a href="grupos.php">Gerenciar Grupos</a> </li>
+      <li><a href="usuarios.php">Gerenciar Usuários</a> </li>
    </ul>
   </li>
 </ul>

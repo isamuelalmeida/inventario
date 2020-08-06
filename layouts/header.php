@@ -19,18 +19,18 @@
       <div class="logo pull-left"> STC - Inventário </div>
       <div class="header-content">
       <div class="header-date pull-left">
-        <strong><?= date("H:i - d/m/Y");?></strong>
+        <strong><?= strftime('%H:%M,  %d de %B de %Y', strtotime(make_date()));?></strong>
       </div>
       <div class="pull-right clearfix">
         <ul class="info-menu list-inline list-unstyled">
           <li class="profile">
             <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-              <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
+              <img src="uploads/users/<?= $user['image'];?>" alt="user-image" class="img-circle img-inline">
               <span><?= remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">
               <li>
-                  <a href="profile.php?id=<?php echo (int)$user['id'];?>">
+                  <a href="profile.php?id=<?= (int)$user['id'];?>">
                       <i class="glyphicon glyphicon-user"></i>
                       Perfil
                   </a>

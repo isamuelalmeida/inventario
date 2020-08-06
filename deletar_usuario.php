@@ -6,10 +6,10 @@
 <?php
   $delete_id = delete_by_id('users',(int)$_GET['id']);
   if($delete_id){
-      $session->msg("s","User deleted.");
-      redirect('users.php');
+      $session->msg("s","Usuário deletado!");
+      redirect('usuarios.php');
   } else {
-      $session->msg("d","User deletion failed Or Missing Prm.");
-      redirect('users.php');
+      $session->msg("d","Não foi possível deletar o usuário.");
+      redirect('usuarios.php');
   }
 ?>
