@@ -4,7 +4,7 @@
   page_require_level(1);
 ?>
 <?php
-  $sector = find_by_id('types_equips',(int)$_GET['id']);
+  $sector = find_by_id('types_equips',(int)$_POST['id']);
   if(!$sector){
     $session->msg("d","Tipo de equiapmento não encontrado!");
     redirect('tipos_equipamento.php');

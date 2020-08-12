@@ -43,11 +43,11 @@
           $html .= "<input type=\"hidden\" name=\"e_id\" value=\"{$result['id']}\">";
 
           $html  .= "<td>";
-          $html  .= "<input type=\"text\" class=\"form-control\" name=\"responsible_user\">";
+          $html  .= "<input type=\"text\" class=\"form-control\" name=\"responsible_user\" required>";
           $html  .= "</td>";
 
           $html .= "<td>";
-          $html .= "<select class=\"form-control\" name=\"sector\">";
+          $html .= "<select class=\"form-control\" name=\"sector\" required>";
                     foreach ($all_sector as $sec):
           $html .=    "<option value=\"{$sec['id']}\">{$sec['name']}</option>";
                     endforeach;
@@ -55,7 +55,7 @@
           $html  .= "</td>";
 
           $html  .= "<td>";
-          $html  .= "<input type=\"date\" class=\"form-control datePicker\" name=\"loan_date\" data-date data-date-format=\"yyyy-mm-dd\">";
+          $html  .= "<input type=\"date\" class=\"form-control datePicker\" name=\"loan_date\" data-date data-date-format=\"yyyy-mm-dd\" required>";
           $html  .= "</td>";
 
           $html  .= "<td>";

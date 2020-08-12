@@ -79,15 +79,15 @@ if(isset($_POST['update-pass'])) {
           <form method="post" action="editar_usuario.php?id=<?= (int)$e_user['id'];?>" class="clearfix">
             <div class="form-group">
                   <label for="name" class="control-label">Nome</label>
-                  <input type="name" class="form-control" name="name" value="<?= remove_junk(ucwords($e_user['name'])); ?>">
+                  <input type="name" class="form-control" name="name" value="<?= remove_junk(ucwords($e_user['name'])); ?>" required>
             </div>
             <div class="form-group">
                   <label for="username" class="control-label">Usuário</label>
-                  <input type="text" class="form-control" name="username" value="<?= remove_junk(ucwords($e_user['username'])); ?>">
+                  <input type="text" class="form-control" name="username" value="<?= remove_junk(ucwords($e_user['username'])); ?>" required>
             </div>
             <div class="form-group">
               <label for="level">Papel do Usuário</label>
-                <select class="form-control" name="level">
+                <select class="form-control" name="level" required>
                   <?php foreach ($groups as $group ):?>
                    <option <?php if($group['group_level'] === $e_user['user_level']) echo 'selected="selected"';?> value="<?= $group['group_level'];?>"><?= ucwords($group['group_name']);?></option>
                 <?php endforeach;?>
@@ -95,7 +95,7 @@ if(isset($_POST['update-pass'])) {
             </div>
             <div class="form-group">
               <label for="status">Status</label>
-                <select class="form-control" name="status">
+                <select class="form-control" name="status" required>
                   <option <?php if($e_user['status'] === '1') echo 'selected="selected"';?>value="1">Ativo</option>
                   <option <?php if($e_user['status'] === '0') echo 'selected="selected"';?> value="0">Inativo</option>
                 </select>
@@ -121,7 +121,7 @@ if(isset($_POST['update-pass'])) {
         <form action="editar_usuario.php?id=<?= (int)$e_user['id'];?>" method="post" class="clearfix">
           <div class="form-group">
                 <label for="password" class="control-label">Senha</label>
-                <input type="password" class="form-control" name="password" placeholder="Digite a nova senha">
+                <input type="password" class="form-control" name="password" placeholder="Digite a nova senha" required>
           </div>
           <div class="form-group clearfix">
                   <button type="submit" name="update-pass" class="btn btn-info pull-right">Atualizar</button>

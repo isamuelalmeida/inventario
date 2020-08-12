@@ -2,7 +2,7 @@
   $page_title = 'Editar Empréstimo';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(2);
 
    $all_sector = find_all('sectors');
 ?>
@@ -82,10 +82,10 @@ if(!$loan){
                   <div id="result" class="list-group"></div>
                 </td>
                 <td>
-                  <input type="text" class="form-control" name="specifications" value="<?= remove_junk($equipment['specifications']); ?>" readonly>
+                  <input type="text" class="form-control" name="specifications" value="<?= remove_junk($equipment['specifications']); ?>" required>
                 </td>
                 <td>
-                  <input type="text" class="form-control" name="responsible_user" value="<?= remove_junk($loan['responsible_user']); ?>">
+                  <input type="text" class="form-control" name="responsible_user" value="<?= remove_junk($loan['responsible_user']); ?>" required>
                 </td>
                 <td>
                   <select class="form-control" name="sector" required>
@@ -98,7 +98,7 @@ if(!$loan){
                   </select>
                 </td>    
                 <td>
-                  <input type="date" class="form-control datepicker" name="loan_date" data-date-format="" value="<?= remove_junk($loan['loan_date']); ?>">
+                  <input type="date" class="form-control datepicker" name="loan_date" data-date-format="" value="<?= remove_junk($loan['loan_date']); ?>" required>
                 </td>
                 <td>
                   <button type="submit" name="update_loan" class="btn btn-primary">Atualizar Empréstimo</button>

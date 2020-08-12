@@ -4,7 +4,7 @@
   page_require_level(1);
 ?>
 <?php
-  $situation = find_by_id('situations',(int)$_GET['id']);
+  $situation = find_by_id('situations',(int)$_POST['id']);
   if(!$situation){
     $session->msg("d","Situação não encontrada!");
     redirect('situacoes.php');

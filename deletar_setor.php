@@ -4,7 +4,7 @@
   page_require_level(1);
 ?>
 <?php
-  $sector = find_by_id('sectors',(int)$_GET['id']);
+  $sector = find_by_id('sectors',(int)$_POST['id']);
   if(!$sector){
     $session->msg("d","Setor não encontrado!");
     redirect('setores.php');

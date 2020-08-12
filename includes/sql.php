@@ -177,18 +177,18 @@ function tableExists($table){
      $login_level = find_by_groupLevel($current_user['user_level']);
      //if user not login
      if (!$session->isUserLoggedIn(true)):
-            $session->msg('d','Please login...');
+            $session->msg('d','Por favor, faça o Login.');
             redirect('index.php', false);
       //if Group status Deactive
      elseif($login_level['group_status'] === '0'):
-           $session->msg('d','This level user has been band!');
-           redirect('admin.php',false);
+           $session->msg('d','Este nível de usuário foi banido!');
+           redirect('dashboard.php',false);
       //cheackin log in User level and Require level is Less than or equal to
      elseif($current_user['user_level'] <= (int)$require_level):
               return true;
       else:
-            $session->msg("d", "Sorry! you dont have permission to view the page.");
-            redirect('admin.php', false);
+            $session->msg("d", "Você não tem permissão para acessar esta página.");
+            redirect('dashboard.php', false);
         endif;
 
      }
@@ -233,9 +233,9 @@ function tableExists($table){
    function find_equipment_by_tombo($equipment_tombo){
      global $db;
      $e_tombo = remove_junk($db->escape($equipment_tombo));
-     $sql  = "SELECT tombo FROM equipments e";
-     $sql .= " INNER JOIN loans l ON l.equipment_id <> e.id";
-     $sql .= " WHERE tombo like '%$e_tombo%' LIMIT 5";
+     $sql  = "SELECT tombo FROM equipments";
+     $sql .= " WHERE id NOT IN (SELECT equipment_id FROM loans)";
+     $sql .= " AND tombo like '%$e_tombo%' LIMIT 5";
      $result = find_by_sql($sql);
      return $result;
    }
@@ -247,8 +247,8 @@ function tableExists($table){
   function find_all_equipment_info_by_tombo($tombo){
     global $db;
     $sql  = "SELECT * FROM equipments e";
-    $sql .= " INNER JOIN loans l ON l.equipment_id <> e.id";
-    $sql .= " WHERE tombo ='{$tombo}'";
+    $sql .= " WHERE id NOT IN (SELECT equipment_id FROM loans)";
+    $sql .= " AND tombo ='{$tombo}'";
     return find_by_sql($sql);
   }
 
@@ -284,13 +284,25 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
 function find_recent_loan_added($limit){
   global $db;
-  $sql  ="SELECT l_h.id,l_h.responsible_user,l_h.loan_date,e.tombo,t_e.name AS type_equip";
-  $sql .= " FROM loans l_h";
-  $sql .= " INNER JOIN equipments e ON e.id = l_h.equipment_id";
+  $sql  ="SELECT l.id,l.responsible_user,l.loan_date,e.tombo,t_e.name AS type_equip";
+  $sql .= " FROM loans l";
+  $sql .= " INNER JOIN equipments e ON e.id = l.equipment_id";
   $sql  .=" INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
   $sql .= " ORDER BY e.created_at DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
+
+ /*--------------------------------------------------------------*/
+ /* Function for Display Recent Equipment
+ /*--------------------------------------------------------------*/
+function find_recent_equipment_added($limit){
+  global $db;
+  $sql  ="SELECT tombo,specifications";
+  $sql .= " FROM equipments";
+  $sql .= " ORDER BY created_at DESC LIMIT ".$db->escape((int)$limit);
+  return find_by_sql($sql);
+}
+
 
 /*--------------------------------------------------------------*/
 /* Function for Generate sales report by two dates

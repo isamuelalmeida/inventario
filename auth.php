@@ -12,8 +12,7 @@ if(empty($errors)){
      $session->login($user_id);
     //Update Sign in time
      updateLastLogIn($user_id);
-     $session->msg("s", "Bem Vindo ao STC - Inventário.");
-     redirect('admin.php',false);
+     redirect('dashboard.php',false);
 
   } else {
     $session->msg("d", "Desculpe, Usuário/Senha incorretos.");

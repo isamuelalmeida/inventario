@@ -2,7 +2,7 @@
 $page_title = 'Adicionar Empréstimo';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(2);
 ?>
 <?php
 
@@ -45,10 +45,10 @@ $page_title = 'Adicionar Empréstimo';
     <form method="post" action="ajax.php" autocomplete="off" id="sug-form">
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-primary">Buscar por equipamento</button>
-            </span>
             <input type="text" id="sug_input" class="form-control" name="tombo"  placeholder="Informe o tombo do equipamento">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary">Buscar equipamento</button>
+            </span>            
          </div>
          <div id="result" class="list-group"></div>
         </div>

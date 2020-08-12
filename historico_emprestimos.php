@@ -2,7 +2,7 @@
   $page_title = 'Histórico de Empréstimos';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(2);
 ?>
 <?php
 $loans = find_all_loan_history();
@@ -10,7 +10,7 @@ $loans = find_all_loan_history();
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-6">
-    <?php echo display_msg($msg); ?>
+    <?= display_msg($msg); ?>
   </div>
 </div>
   <div class="row">
@@ -20,10 +20,7 @@ $loans = find_all_loan_history();
           <strong>
             <span class="glyphicon glyphicon-th"></span>
             <span>Histórico de Empréstimos</span>
-          </strong>
-          <div class="pull-right">
-            <a href="adicionar_emprestimo.php" class="btn btn-primary">Adicionar empréstimo</a>
-         </div>
+          </strong>          
         </div>
         <div class="panel-body">
           <table class="table table-bordered">

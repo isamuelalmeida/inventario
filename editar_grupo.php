@@ -49,15 +49,15 @@
       <form method="post" action="editar_grupo.php?id=<?= (int)$e_group['id'];?>" class="clearfix">
         <div class="form-group">
               <label for="name" class="control-label">Nome do Grupo</label>
-              <input type="name" class="form-control" name="group-name" value="<?= remove_junk(ucwords($e_group['group_name'])); ?>">
+              <input type="name" class="form-control" name="group-name" value="<?= remove_junk(ucwords($e_group['group_name'])); ?>" required>
         </div>
         <div class="form-group">
               <label for="level" class="control-label">Nível do Grupo</label>
-              <input type="number" class="form-control" name="group-level" value="<?= (int)$e_group['group_level']; ?>">
+              <input type="number" class="form-control" name="group-level" value="<?= (int)$e_group['group_level']; ?>" required>
         </div>
         <div class="form-group">
           <label for="status">Estado</label>
-              <select class="form-control" name="status">
+              <select class="form-control" name="status" required>
                 <option <?php if($e_group['group_status'] === '1') echo 'selected="selected"';?> value="1"> Ativo </option>
                 <option <?php if($e_group['group_status'] === '0') echo 'selected="selected"';?> value="0"> Inativo </option>
               </select>

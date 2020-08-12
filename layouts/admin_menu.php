@@ -1,6 +1,6 @@
 <ul>
   <li>
-    <a href="admin.php">
+    <a href="dashboard.php">
       <i class="glyphicon glyphicon-home"></i>
       <span>Dashboard</span>
     </a>

@@ -4,7 +4,7 @@
   page_require_level(1);
 ?>
 <?php
-  $supplier = find_by_id('suppliers',(int)$_GET['id']);
+  $supplier = find_by_id('suppliers',(int)$_POST['id']);
   if(!$supplier){
     $session->msg("d","Fornecedor não encontrado!");
     redirect('fornecedores.php');

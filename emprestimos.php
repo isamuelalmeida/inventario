@@ -2,7 +2,7 @@
   $page_title = 'Todos os Empréstimos';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(2);
 ?>
 <?php
 $loans = find_all_loan();
@@ -10,7 +10,7 @@ $loans = find_all_loan();
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-6">
-    <?php echo display_msg($msg); ?>
+    <?= display_msg($msg); ?>
   </div>
 </div>
   <div class="row">
@@ -49,12 +49,14 @@ $loans = find_all_loan();
                 <td class="text-center"><?= remove_junk($loan['loan_date']); ?></td>                
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="editar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-edit"></span>
+                    <a href="editar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-warning btn-xs"  title="Editar" data-toggle="tooltip">
+                      <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <a href="deletar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-danger btn-xs"  title="Finalizar empréstimo" data-toggle="tooltip">
+                    <button title="Finalizar empréstimo" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#launchModal-<?= (int)$loan['id'];?>">
                       <span class="glyphicon glyphicon-share-alt"></span>
-                    </a>
+                    </button>                    
+
+                    <?php $action="finalizar_emprestimo.php"; $id=(int)$loan['id']; include('layouts/modal-confirmacao.php'); ?>
                   </div>
                 </td>
               </tr>

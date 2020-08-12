@@ -4,7 +4,7 @@
   page_require_level(1);
 ?>
 <?php
-  $manufacturer = find_by_id('manufacturers',(int)$_GET['id']);
+  $manufacturer = find_by_id('manufacturers',(int)$_POST['id']);
   if(!$manufacturer){
     $session->msg("d","Fabricante não encontrado!");
     redirect('fabricantes.php');

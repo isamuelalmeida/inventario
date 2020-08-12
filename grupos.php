@@ -51,10 +51,7 @@
                 <a href="editar_grupo.php?id=<?= (int)$a_group['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                   <i class="glyphicon glyphicon-pencil"></i>
                </a>
-                <a href="deletar_grupo.php?id=<?= (int)$a_group['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remover">
-                  <i class="glyphicon glyphicon-remove"></i>
-                </a>
-                </div>
+             </div>
            </td>
           </tr>
         <?php endforeach;?>

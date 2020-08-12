@@ -2,13 +2,13 @@
   $page_title = 'Todos os Equipamentos';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(2);
+   page_require_level(1);
   $equipments = join_equipment_table();
 ?>
 <?php include_once('layouts/header.php'); ?>
   <div class="row">
      <div class="col-md-12">
-       <?php echo display_msg($msg); ?>
+       <?= display_msg($msg); ?>
      </div>
     <div class="col-md-12">
       <div class="panel panel-default">
@@ -47,12 +47,14 @@
                 <td class="text-center"><?= remove_junk($equipment['situation']); ?></td>                
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="editar_equipamento.php?id=<?php echo (int)$equipment['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                    <a href="editar_equipamento.php?id=<?= (int)$equipment['id'];?>" class="btn btn-xs btn-warning"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    <a href="deletar_equipamento.php?id=<?php echo (int)$equipment['id'];?>" class="btn btn-danger btn-xs"  title="Deletar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-trash"></span>
-                    </a>
+                    
+                    <button title="Remover" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#launchModal-<?= (int)$equipment['id'];?>">
+                      <i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                    <?php $action="deletar_equipamento.php"; $id=(int)$equipment['id']; include('layouts/modal-confirmacao.php'); ?>
                   </div>
                 </td>
               </tr>

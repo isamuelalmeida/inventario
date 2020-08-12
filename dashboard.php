@@ -9,6 +9,7 @@
  $c_loan       = count_by_id('loans');
  $c_sector          = count_by_id('sectors');
  $c_user          = count_by_id('users');
+ $recent_equipments    = find_recent_equipment_added('5');
  $recent_loans    = find_recent_loan_added('5');
 
 ?>
@@ -34,7 +35,7 @@
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-red">
-          <i class="glyphicon glyphicon-list"></i>
+          <i class="glyphicon glyphicon-th-large"></i>
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?= $c_equipment['total']; ?> </h2>
@@ -45,7 +46,7 @@
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-blue">
-          <i class="glyphicon glyphicon-shopping-cart"></i>
+          <i class="glyphicon glyphicon-random"></i>
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?= $c_loan['total']; ?> </h2>
@@ -56,7 +57,7 @@
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-yellow">
-          <i class="glyphicon glyphicon-usd"></i>
+          <i class="glyphicon glyphicon-object-align-vertical"></i>
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?= $c_sector['total']; ?></h2>
@@ -80,7 +81,7 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Empréstimos recentes</span>
+            <span>Equipamentos adicionados recentemente</span>
           </strong>
         </div>
         <div class="panel-body">
@@ -89,21 +90,19 @@
          <tr>
            <th class="text-center" style="width: 50px;">#</th>
            <th>Tombo</th>
-           <th>Tipo de equipamento</th>
-           <th>Usuário Responsável</th>
+           <th>Especificações</th>
          </tr>
        </thead>
        <tbody>
-         <?php foreach ($recent_loans as  $recent_loan): ?>
+         <?php foreach ($recent_equipments as  $r_e): ?>
          <tr>
            <td class="text-center"><?= count_id();?></td>
            <td>
-            <a href="#?id=<?= (int)$recent_loan['id']; ?>">
-             <?= remove_junk(first_character($recent_loan['tombo'])); ?>
+            <a href="#?id=<?= (int)$r_e['id']; ?>">
+             <?= remove_junk(first_character($r_e['tombo'])); ?>
            </a>
            </td>
-           <td><?= remove_junk(ucfirst($recent_loan['type_equip'])); ?></td>
-           <td><?= remove_junk(first_character($recent_loan['responsible_user'])); ?></td>
+           <td><?= remove_junk(ucfirst($r_e['specifications'])); ?></td>
         </tr>
 
        <?php endforeach; ?>
@@ -117,7 +116,7 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Empréstimos recentes</span>
+            <span>Empréstimos adicionados recentemente</span>
           </strong>
         </div>
         <div class="panel-body">

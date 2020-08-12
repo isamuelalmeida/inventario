@@ -1,10 +1,10 @@
 <?php ob_start();
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(3);
+  page_require_level(2);
 ?>
 <?php
-  $d_loan = find_by_id('loans',(int)$_GET['id']);
+  $d_loan = find_by_id('loans',(int)$_POST['id']);
   if(!$d_loan){
     $session->msg("d","Empréstimo não encontado!");
     redirect('emprestimos.php');
@@ -31,10 +31,10 @@
         redirect('adicionar_emprestimo.php', false);
       }          
 
-      $session->msg("s","Empréstimo excluído.");
+      $session->msg("s","Empréstimo finalizado.");
       redirect('emprestimos.php');
   } else {
-      $session->msg("d","Falha ao excluir o empréstimo.");
+      $session->msg("d","Falha ao finalizar o empréstimo.");
       redirect('emprestimos.php');
   }
 ?>

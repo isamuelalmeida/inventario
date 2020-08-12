@@ -31,7 +31,7 @@
 
   <div class="row">
      <div class="col-md-12">
-       <?php echo display_msg($msg); ?>
+       <?= display_msg($msg); ?>
      </div>
   </div>
    <div class="row">
@@ -73,16 +73,18 @@
             <tbody>
               <?php foreach ($all_suppliers as $sup):?>
                 <tr>
-                    <td class="text-center"><?php echo count_id();?></td>
-                    <td><?php echo remove_junk(ucfirst($sup['name'])); ?></td>
+                    <td class="text-center"><?= count_id();?></td>
+                    <td><?= remove_junk(ucfirst($sup['name'])); ?></td>
                     <td class="text-center">
                       <div class="btn-group">
-                        <a href="editar_fornecedor.php?id=<?php echo (int)$sup['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
+                        <a href="editar_fornecedor.php?id=<?= (int)$sup['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                           <span class="glyphicon glyphicon-edit"></span>
                         </a>
-                        <a href="deletar_fornecedor.php?id=<?php echo (int)$sup['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remover">
-                          <span class="glyphicon glyphicon-trash"></span>
-                        </a>
+                        
+                        <button title="Remover" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#launchModal-<?= (int)$sup['id'];?>">
+                          <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                        <?php $action="deletar_fornecedor.php"; $id=(int)$sup['id']; include('layouts/modal-confirmacao.php'); ?>
                       </div>
                     </td>
 
