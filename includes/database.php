@@ -18,12 +18,12 @@ public function db_connect()
   $this->con = mysqli_connect(DB_HOST,DB_USER,DB_PASS);
   if(!$this->con)
          {
-           die(" Database connection failed:". mysqli_connect_error());
+           die(" Falha ao conectar com o banco de dados:". mysqli_connect_error());
          } else {
            $select_db = $this->con->select_db(DB_NAME);
              if(!$select_db)
              {
-               die("Failed to Select Database". mysqli_connect_error());
+               die("Falha ao selecionar o banco de dados.". mysqli_connect_error());
              }
          }
 }
@@ -50,9 +50,9 @@ public function query($sql)
       }
       // only for Develope mode
       if (!$this->query_id)        
-          die("Error on this Query :<pre> " . $sql ."</pre>");
+      //  die("Error on this Query :<pre> " . $sql ."</pre>");
       // For production mode
-      //  die("Error on Query");
+        die("Desculpe, devido a um erro não foi possível completar esta operação.");
 
        return $this->query_id;
 

@@ -3,25 +3,58 @@
   require_once('includes/load.php');
   if($session->isUserLoggedIn(true)) { redirect('dashboard.php', false);}
 ?>
-<?php include_once('layouts/header.php'); ?>
-<div class="login-page">
-    <div class="text-center">
-       <h1>STC - Inventário</h1>
-       <p>Entre para iniciar a sessão</p>
-     </div>
-     <?= display_msg($msg); ?>
-      <form method="post" action="auth.php" class="clearfix">
-        <div class="form-group">
-              <label for="username" class="control-label">Usuário</label>
-              <input type="name" class="form-control" name="username" placeholder="usuário">
-        </div>
-        <div class="form-group">
-            <label for="Password" class="control-label">Senha</label>
-            <input type="password" name= "password" class="form-control" placeholder="senha">
-        </div>
-        <div class="form-group">
-                <button type="submit" class="btn btn-info  pull-right">Entrar</button>
-        </div>
-    </form>
-</div>
-<?php include_once('layouts/footer.php'); ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Inventário</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+<!--===============================================================================================-->
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/login.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-65">
+				<form method="post" action="auth.php" class="login100-form">
+					<span class="login100-form-title p-b-65">
+						Inventário
+					</span>
+
+					<?= display_msg($msg); ?>
+
+					<div class="wrap-input100">
+						<input class="input100" type="name" name="username" placeholder="Usuário" required>
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+
+					<div class="wrap-input100">
+						<input class="input100" type="password" name="password" placeholder="Senha" required>
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-20">
+						<button type="submit" class="login100-form-btn">
+							Entrar
+						</button>
+					</div>					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+</body>
+</html>

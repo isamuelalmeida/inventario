@@ -1,26 +1,25 @@
 <?php
 
-class  Media {
+class  Upload {
 
   public $imageInfo;
   public $fileName;
   public $fileType;
   public $fileTempPath;
   //Set destination for upload
-  public $userPath = SITE_ROOT.DS.'..'.DS.'uploads/users';
-  public $productPath = SITE_ROOT.DS.'..'.DS.'uploads/products';
+  public $userPath = SITE_ROOT.DS.'..'.DS.'assets/img/users';
 
 
   public $errors = array();
   public $upload_errors = array(
-    0 => 'There is no error, the file uploaded with success',
-    1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-    2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
-    3 => 'The uploaded file was only partially uploaded',
-    4 => 'No file was uploaded',
-    6 => 'Missing a temporary folder',
-    7 => 'Failed to write file to disk.',
-    8 => 'A PHP extension stopped the file upload.'
+    0 => 'Não há erro, o arquivo foi enviado com sucesso',
+    1 => 'O arquivo enviado excede a diretiva upload_max_filesize em php.ini',
+    2 => 'O arquivo enviado excede a diretiva MAX_FILE_SIZE que foi especificada no formulário HTML',
+    3 => 'O arquivo enviado foi carregado apenas parcialmente',
+    4 => 'Nenhum arquivo foi enviado',
+    6 => 'Faltando uma pasta temporária',
+    7 => 'Falha ao gravar arquivo no disco',
+    8 => 'Uma extensão PHP interrompeu o upload do arquivo'
   );
   public$upload_extensions = array(
    'gif',
@@ -35,16 +34,16 @@ class  Media {
      }
    }
 
-  public function upload($file)
+  public function upload_file($file)
   {
     if(!$file || empty($file) || !is_array($file)):
-      $this->errors[] = "No file was uploaded.";
+      $this->errors[] = "Nenhum arquivo foi enviado";
       return false;
     elseif($file['error'] != 0):
       $this->errors[] = $this->upload_errors[$file['error']];
       return false;
     elseif(!$this->file_ext($file['name'])):
-      $this->errors[] = 'File not right format ';
+      $this->errors[] = 'Formato de arquivo incorreto ';
       return false;
     else:
       $this->imageInfo = getimagesize($file['tmp_name']);
@@ -56,60 +55,7 @@ class  Media {
 
   }
 
- public function process(){
 
-    if(!empty($this->errors)):
-      return false;
-    elseif(empty($this->fileName) || empty($this->fileTempPath)):
-      $this->errors[] = "The file location was not available.";
-      return false;
-    elseif(!is_writable($this->productPath)):
-      $this->errors[] = $this->productPath." Must be writable!!!.";
-      return false;
-    elseif(file_exists($this->productPath."/".$this->fileName)):
-      $this->errors[] = "The file {$this->fileName} already exists.";
-      return false;
-    else:
-     return true;
-    endif;
- }
- /*--------------------------------------------------------------*/
- /* Function for Process media file
- /*--------------------------------------------------------------*/
-  public function process_media(){
-    if(!empty($this->errors)){
-        return false;
-      }
-    if(empty($this->fileName) || empty($this->fileTempPath)){
-        $this->errors[] = "The file location was not available.";
-        return false;
-      }
-
-    if(!is_writable($this->productPath)){
-        $this->errors[] = $this->productPath." Must be writable!!!.";
-        return false;
-      }
-
-    if(file_exists($this->productPath."/".$this->fileName)){
-      $this->errors[] = "The file {$this->fileName} already exists.";
-      return false;
-    }
-
-    if(move_uploaded_file($this->fileTempPath,$this->productPath.'/'.$this->fileName))
-    {
-
-      if($this->insert_media()){
-        unset($this->fileTempPath);
-        return true;
-      }
-
-    } else {
-
-      $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
-      return false;
-    }
-
-  }
   /*--------------------------------------------------------------*/
   /* Function for Process user image
   /*--------------------------------------------------------------*/
@@ -119,15 +65,15 @@ class  Media {
         return false;
       }
     if(empty($this->fileName) || empty($this->fileTempPath)){
-        $this->errors[] = "The file location was not available.";
+        $this->errors[] = "O local do arquivo não estava disponível";
         return false;
       }
     if(!is_writable($this->userPath)){
-        $this->errors[] = $this->userPath." Must be writable!!!.";
+        $this->errors[] = $this->userPath." Deve ser gravável!!!";
         return false;
       }
     if(!$id){
-      $this->errors[] = " Missing user id.";
+      $this->errors[] = " ID de usuário ausente.";
       return false;
     }
     $ext = explode(".",$this->fileName);
@@ -144,7 +90,7 @@ class  Media {
          }
 
        } else {
-         $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.";
+         $this->errors[] = "O upload do arquivo falhou, possivelmente devido a permissões incorretas na pasta de upload";
          return false;
        }
     }
@@ -175,44 +121,6 @@ class  Media {
      }
 
    }
-/*--------------------------------------------------------------*/
-/* Function for insert media image
-/*--------------------------------------------------------------*/
-  private function insert_media(){
-
-         global $db;
-         $sql  = "INSERT INTO media ( file_name,file_type )";
-         $sql .=" VALUES ";
-         $sql .="(
-                  '{$db->escape($this->fileName)}',
-                  '{$db->escape($this->fileType)}'
-                  )";
-       return ($db->query($sql) ? true : false);
-
-  }
-/*--------------------------------------------------------------*/
-/* Function for Delete media by id
-/*--------------------------------------------------------------*/
-   public function media_destroy($id,$file_name){
-     $this->fileName = $file_name;
-     if(empty($this->fileName)){
-         $this->errors[] = "The Photo file Name missing.";
-         return false;
-       }
-     if(!$id){
-       $this->errors[] = "Missing Photo id.";
-       return false;
-     }
-     if(delete_by_id('media',$id)){
-         unlink($this->productPath.'/'.$this->fileName);
-         return true;
-     } else {
-       $this->error[] = "Photo deletion failed Or Missing Prm.";
-       return false;
-     }
-
-   }
-
 
 
 }

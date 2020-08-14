@@ -52,19 +52,19 @@
           <form method="post" action="adicionar_usuario.php">
             <div class="form-group">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control" name="full-name" placeholder="Nome Completo">
+                <input type="text" class="form-control" name="full-name" placeholder="Nome Completo" required>
             </div>
             <div class="form-group">
                 <label for="username">Usuário</label>
-                <input type="text" class="form-control" name="username" placeholder="Usuário">
+                <input type="text" class="form-control" name="username" placeholder="Usuário" required>
             </div>
             <div class="form-group">
                 <label for="password">Senha</label>
-                <input type="password" class="form-control" name ="password"  placeholder="Senha">
+                <input type="password" class="form-control" name ="password"  placeholder="Senha" required>
             </div>
             <div class="form-group">
               <label for="level">Papel do Usuário</label>
-                <select class="form-control" name="level">
+                <select class="form-control" name="level" required>
                   <?php foreach ($groups as $group ):?>
                    <option value="<?= $group['group_level'];?>"><?= ucwords($group['group_name']);?></option>
                 <?php endforeach;?>

@@ -300,6 +300,8 @@ input[type=file]{
   border-radius: 3px 3px 0 0;
 }.profile .jumbotron h3{
   color: white;
+}.profile .btn-danger:hover{
+  background-color:#bb282a !important;
 }img.img-size-2{
   width: 125px;
   height: 125px;

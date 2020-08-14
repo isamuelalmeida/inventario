@@ -98,7 +98,7 @@
          <tr>
            <td class="text-center"><?= count_id();?></td>
            <td>
-            <a href="#?id=<?= (int)$r_e['id']; ?>">
+            <a href="#">
              <?= remove_junk(first_character($r_e['tombo'])); ?>
            </a>
            </td>
@@ -134,7 +134,7 @@
          <tr>
            <td class="text-center"><?= count_id();?></td>
            <td>
-            <a href="#?id=<?= (int)$recent_loan['id']; ?>">
+            <a href="#">
              <?= remove_junk(first_character($recent_loan['tombo'])); ?>
            </a>
            </td>

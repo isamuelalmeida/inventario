@@ -41,7 +41,7 @@
   </li>  
   <li>
     <a href="#" class="submenu-toggle">
-      <i class="glyphicon glyphicon-th-list"></i>
+      <i class="glyphicon glyphicon-random"></i>
       <span>Empréstimos</span>
     </a>
     <ul class="nav submenu">

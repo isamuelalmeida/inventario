@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 10.32.128.14
--- Tempo de geração: 31/07/2020 às 15:34
+-- Tempo de geração: 14/08/2020 às 19:58
 -- Versão do servidor: 10.3.22-MariaDB-0+deb10u1
--- Versão do PHP: 7.4.6
+-- Versão do PHP: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,16 +41,6 @@ CREATE TABLE `equipments` (
   `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Despejando dados para a tabela `equipments`
---
-
-INSERT INTO `equipments` (`id`, `tombo`, `specifications`, `types_equip_id`, `supplier_id`, `manufacturer_id`, `situation_id`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
-(1, 80146, 'bla bla blá', 1, 1, 1, 1, 1, '2020-07-29 23:44:10', NULL, NULL),
-(2, 80149, 'bla bla blá2', 1, 1, 1, 1, 1, '2020-07-29 23:44:10', NULL, NULL),
-(4, 12345, 'bla bla 3', 2, 1, 1, 4, 1, '2020-07-29 22:39:51', '2020-07-30 00:17:42', 1),
-(15, 12342, 'bla bla 4', 2, 1, 1, 1, 1, '2020-07-30 00:18:15', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -69,13 +59,6 @@ CREATE TABLE `loans` (
   `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Despejando dados para a tabela `loans`
---
-
-INSERT INTO `loans` (`id`, `equipment_id`, `responsible_user`, `sector_id`, `loan_date`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
-(3, 2, 'Amancia', 4, '2020-07-31', 4, '2020-07-31 11:01:11', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -91,13 +74,6 @@ CREATE TABLE `loan_historys` (
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Despejando dados para a tabela `loan_historys`
---
-
-INSERT INTO `loan_historys` (`id`, `equipment_id`, `responsible_user`, `sector_id`, `loan_date`, `created_by`, `created_at`) VALUES
-(2, 1, 'Carlos Araldo', 4, '2020-07-31', 1, '2020-07-31 09:27:29');
 
 -- --------------------------------------------------------
 
@@ -140,7 +116,7 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 (4, 'ASPLAE'),
 (3, 'RH'),
 (5, 'SEATRAN'),
-(1, 'Suinfor');
+(1, 'SUINFOR');
 
 -- --------------------------------------------------------
 
@@ -159,7 +135,7 @@ CREATE TABLE `situations` (
 
 INSERT INTO `situations` (`id`, `name`) VALUES
 (5, 'Funcional mas com defeito'),
-(6, 'Furtado'),
+(7, 'Furtado'),
 (4, 'Não Operacional'),
 (1, 'Operacional');
 
@@ -198,6 +174,7 @@ CREATE TABLE `types_equips` (
 --
 
 INSERT INTO `types_equips` (`id`, `name`) VALUES
+(14, 'Access Point'),
 (11, 'All in One'),
 (2, 'Computador PC'),
 (6, 'Estabilizador'),
@@ -220,9 +197,9 @@ INSERT INTO `types_equips` (`id`, `name`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(60) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `name` varchar(60) CHARACTER SET utf8 NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 NOT NULL,
   `user_level` int(11) NOT NULL,
   `image` varchar(255) DEFAULT 'no_image.jpg',
   `status` int(1) NOT NULL,
@@ -234,8 +211,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, ' Admin User', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.jpg', 1, '2020-07-31 11:08:29'),
-(5, 'Usuário comum', 'user', '12dea96fec20593566ab75692c9949596833adc9', 2, 'no_image.jpg', 1, '2020-07-31 11:09:25');
+(1, 'Administrador', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.jpg', 1, '2020-08-14 16:48:55'),
+(5, 'Teste x', 'user', '12dea96fec20593566ab75692c9949596833adc9', 2, 'no_image.jpg', 1, '2020-08-14 16:42:28');
 
 -- --------------------------------------------------------
 
@@ -256,7 +233,7 @@ CREATE TABLE `user_groups` (
 
 INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VALUES
 (1, 'Administrador', 1, 1),
-(2, 'Operacional', 2, 1);
+(2, 'Operacional', 2, 0);
 
 --
 -- Índices de tabelas apagadas
@@ -338,55 +315,55 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de tabela `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `loans`
 --
 ALTER TABLE `loans`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `loan_historys`
 --
 ALTER TABLE `loan_historys`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `manufacturers`
 --
 ALTER TABLE `manufacturers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `sectors`
 --
 ALTER TABLE `sectors`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `situations`
 --
 ALTER TABLE `situations`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `types_equips`
 --
 ALTER TABLE `types_equips`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `user_groups`

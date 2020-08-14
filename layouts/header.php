@@ -7,16 +7,16 @@
            echo remove_junk($page_title);
             elseif(!empty($user))
            echo ucfirst($user['name']);
-            else echo "STC - Inventário";?>
+            else echo "Inventário";?>
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-    <link rel="stylesheet" href="libs/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
   </head>
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-      <div class="logo pull-left"> STC - Inventário </div>
+      <div class="logo pull-left"> Inventário </div>
       <div class="header-content">
       <div class="header-date pull-left">
         <strong><?= strftime('%H:%M,  %d de %B de %Y', strtotime(make_date()));?></strong>
@@ -25,22 +25,16 @@
         <ul class="info-menu list-inline list-unstyled">
           <li class="profile">
             <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
-              <img src="uploads/users/<?= $user['image'];?>" alt="user-image" class="img-circle img-inline">
+              <img src="assets/img/users/<?= $user['image'];?>" alt="user-image" class="img-circle img-inline">
               <span><?= remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">
               <li>
-                  <a href="profile.php?id=<?= (int)$user['id'];?>">
+                  <a href="perfil.php?id=<?= (int)$user['id'];?>">
                       <i class="glyphicon glyphicon-user"></i>
                       Perfil
                   </a>
-              </li>
-             <li>
-                 <a href="edit_account.php" title="edit account">
-                     <i class="glyphicon glyphicon-cog"></i>
-                     Configurações
-                 </a>
-             </li>
+              </li>             
              <li class="last">
                  <a href="logout.php">
                      <i class="glyphicon glyphicon-off"></i>

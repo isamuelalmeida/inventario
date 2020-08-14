@@ -10,7 +10,7 @@
 
 4. As principais funções utilizados no sistema estão em includes/functions.php.
 
-5. Os arquivos de configuração de layout (css, js) estão no diretório libs.
+5. Os arquivos de configuração de design da página estão nos diretórios assets e layouts.
 
 6. Faça login utilizando as seguintes credenciais:
 

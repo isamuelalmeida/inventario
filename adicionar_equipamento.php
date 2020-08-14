@@ -53,7 +53,7 @@ if(isset($_POST['add_equipment'])){
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-12">
-    <?php echo display_msg($msg); ?>
+    <?= display_msg($msg); ?>
   </div>
 </div>
 <div class="row">
