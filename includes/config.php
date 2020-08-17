@@ -11,9 +11,9 @@
 |
 |
 */
-  define( 'DB_HOST', 'localhost' );          // Set database host
-  define( 'DB_USER', 'sam' );             // Set database user
-  define( 'DB_PASS', '1234' );             // Set database password
+  define( 'DB_HOST', 'mysql-inventario' );          // Set database host
+  define( 'DB_USER', 'invent' );             // Set database user
+  define( 'DB_PASS', 'stc@292930' );             // Set database password
   define( 'DB_NAME', 'inventory' );        // Set database name
 
 ?>
