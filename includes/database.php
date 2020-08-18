@@ -18,12 +18,14 @@ public function db_connect()
   $this->con = mysqli_connect(DB_HOST,DB_USER,DB_PASS);
   if(!$this->con)
          {
-           die(" Falha ao conectar com o banco de dados:". mysqli_connect_error());
+           //die(" Falha ao conectar com o banco de dados:". mysqli_connect_error());
+           die(" Falha ao conectar com o banco de dados.");
          } else {
            $select_db = $this->con->select_db(DB_NAME);
              if(!$select_db)
              {
-               die("Falha ao selecionar o banco de dados.". mysqli_connect_error());
+               // die("Falha ao selecionar o banco de dados.". mysqli_connect_error());
+               die("Falha ao selecionar o banco de dados.");
              }
          }
 }
