@@ -190,7 +190,7 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
    function join_equipment_table(){
      global $db;
-     $sql  =" SELECT e.id, e.tombo, e.specifications, t_e.name AS type_equip,";
+     $sql  =" SELECT e.id, e.tombo, e.specifications, e.obs, t_e.name AS type_equip,";
      $sql  .=" s.name AS supplier, m.name AS manufacturer, sit.name AS situation";
      $sql  .=" FROM equipments e";
      $sql  .=" INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
@@ -237,9 +237,10 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_all_equipment_info_by_tombo($tombo){
     global $db;
-    $sql  = "SELECT * FROM equipments e";
-    $sql .= " WHERE id NOT IN (SELECT equipment_id FROM loans)";
-    $sql .= " AND tombo ='{$tombo}'";
+    $sql  = "SELECT e.id,e.tombo,t_e.name AS type_equip FROM equipments e";
+    $sql .= " INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
+    $sql .= " WHERE e.id NOT IN (SELECT equipment_id FROM loans)";    
+    $sql .= " AND e.tombo ='{$tombo}'";
     return find_by_sql($sql);
   }
 
@@ -259,10 +260,11 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  function find_all_loan(){
    global $db;
-   $sql  = "SELECT l.id,l.responsible_user,l.loan_date,e.tombo,e.specifications,s.name AS sector";
+   $sql  = "SELECT l.id,l.responsible_user,l.loan_date,e.tombo,e.specifications,s.name AS sector,t_e.name AS type_equip";
    $sql .= " FROM loans l";
    $sql .= " INNER JOIN equipments e ON e.id = l.equipment_id";
    $sql .= " INNER JOIN sectors s ON s.id = l.sector_id";
+   $sql .= " INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
    $sql .= " ORDER BY l.created_at DESC";   
    return find_by_sql($sql);
  }

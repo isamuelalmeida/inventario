@@ -70,6 +70,7 @@ $page_title = 'Adicionar Empréstimo';
          <table class="table table-bordered">
            <thead>
             <th> Tombo </th>
+            <th> Tipo de Equipamento</th>
             <th> Usuário Responsável </th>
             <th> Setor </th>
             <th> Data do empréstimo </th>

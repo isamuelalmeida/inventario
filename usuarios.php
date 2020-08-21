@@ -55,7 +55,7 @@ $all_users = find_all_user();
                 <td class="text-center">
                  <div class="btn-group">
                   <a href="editar_usuario.php?id=<?= (int)$a_user['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
-                    <i class="glyphicon glyphicon-pencil"></i>
+                    <i class="glyphicon glyphicon-edit"></i>
                   </a>
                   <button title="Remover" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#launchModal-<?= (int)$a_user['id'];?>">
                     <i class="glyphicon glyphicon-remove"></i>

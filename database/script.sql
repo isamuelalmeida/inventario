@@ -31,6 +31,7 @@ CREATE TABLE `equipments` (
   `id` int(11) UNSIGNED NOT NULL,
   `tombo` int(11) NOT NULL,
   `specifications` varchar(250) NOT NULL,
+  `obs` varchar(250) DEFAULT NULL,
   `types_equip_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,

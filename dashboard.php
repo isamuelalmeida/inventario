@@ -88,7 +88,6 @@
           <table class="table table-striped table-bordered table-condensed">
        <thead>
          <tr>
-           <th class="text-center" style="width: 50px;">#</th>
            <th>Tombo</th>
            <th>Especificações</th>
          </tr>
@@ -96,12 +95,7 @@
        <tbody>
          <?php foreach ($recent_equipments as  $r_e): ?>
          <tr>
-           <td class="text-center"><?= count_id();?></td>
-           <td>
-            <a href="#">
-             <?= remove_junk(first_character($r_e['tombo'])); ?>
-           </a>
-           </td>
+           <td><?= remove_junk(first_character($r_e['tombo'])); ?></td>
            <td><?= remove_junk(ucfirst($r_e['specifications'])); ?></td>
         </tr>
 
@@ -123,7 +117,6 @@
           <table class="table table-striped table-bordered table-condensed">
        <thead>
          <tr>
-           <th class="text-center" style="width: 50px;">#</th>
            <th>Tombo</th>
            <th>Tipo de equipamento</th>
            <th>Usuário Responsável</th>
@@ -132,12 +125,7 @@
        <tbody>
          <?php foreach ($recent_loans as  $recent_loan): ?>
          <tr>
-           <td class="text-center"><?= count_id();?></td>
-           <td>
-            <a href="#">
-             <?= remove_junk(first_character($recent_loan['tombo'])); ?>
-           </a>
-           </td>
+           <td><?= remove_junk(first_character($recent_loan['tombo'])); ?></td>
            <td><?= remove_junk(ucfirst($recent_loan['type_equip'])); ?></td>
            <td><?= remove_junk(first_character($recent_loan['responsible_user'])); ?></td>
         </tr>

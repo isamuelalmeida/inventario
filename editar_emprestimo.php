@@ -98,7 +98,7 @@ if(!$loan){
                   </select>
                 </td>    
                 <td>
-                  <input type="date" class="form-control datepicker" name="loan_date" data-date-format="" value="<?= remove_junk($loan['loan_date']); ?>" required>
+                  <input type="date" class="form-control" name="loan_date" value="<?= remove_junk($loan['loan_date']); ?>" required>
                 </td>
                 <td>
                   <button type="submit" name="update_loan" class="btn btn-primary">Atualizar Empréstimo</button>
