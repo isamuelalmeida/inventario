@@ -49,7 +49,7 @@
            <td class="text-center">
              <div class="btn-group">
                 <a href="editar_grupo.php?id=<?= (int)$a_group['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
-                  <i class="glyphicon glyphicon-pencil"></i>
+                  <i class="glyphicon glyphicon-edit"></i>
                </a>
              </div>
            </td>

@@ -38,9 +38,11 @@
 
           $html .= "<tr>";
 
+          $html .= "<input type=\"hidden\" name=\"e_id\" value=\"{$result['id']}\">";
+
           $html .= "<td id=\"e_tombo\">".$result['tombo']."</td>";
 
-          $html .= "<input type=\"hidden\" name=\"e_id\" value=\"{$result['id']}\">";
+          $html .= "<td>".$result['type_equip']."</td>";
 
           $html  .= "<td>";
           $html  .= "<input type=\"text\" class=\"form-control\" name=\"responsible_user\" required>";
@@ -48,14 +50,15 @@
 
           $html .= "<td>";
           $html .= "<select class=\"form-control\" name=\"sector\" required>";
-                    foreach ($all_sector as $sec):
+          $html .=    "<option selected value=\"\">Selecione</option>";
+                    foreach ($all_sector as $sec):          
           $html .=    "<option value=\"{$sec['id']}\">{$sec['name']}</option>";
                     endforeach;
           $html .= "</select>";
           $html  .= "</td>";
 
           $html  .= "<td>";
-          $html  .= "<input type=\"date\" class=\"form-control datePicker\" name=\"loan_date\" data-date data-date-format=\"yyyy-mm-dd\" required>";
+          $html  .= "<input type=\"date\" class=\"form-control\" name=\"loan_date\" value=\"2020-08-11\" required>";
           $html  .= "</td>";
 
           $html  .= "<td>";

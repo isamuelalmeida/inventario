@@ -1,34 +1,46 @@
 <?php ob_start();
-$page_title = 'Sales Report';
+$page_title = 'Relatório de Equipamentos';
 $results = '';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(2);
 ?>
 <?php
   if(isset($_POST['submit'])){
-    $req_dates = array('start-date','end-date');
-    validate_fields($req_dates);
+    $req_fields = array('equipment-tombo','equipment-specifications','equipment-sector','equipment-type_equip','equipment-supplier','equipment-manufacturer','equipment-situation');
+    //validate_fields($req_fields);
 
     if(empty($errors)):
-      $start_date   = remove_junk($db->escape($_POST['start-date']));
-      $end_date     = remove_junk($db->escape($_POST['end-date']));
-      $results      = find_sale_by_dates($start_date,$end_date);
+      $equip_tombo  = remove_junk($db->escape($_POST['equipment-tombo']));
+      $equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
+      $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
+      $equip_supplier   = remove_junk($db->escape($_POST['equipment-supplier']));
+      $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
+      $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));
+
+      $all_equips = find_by_sql("
+        SELECT e.tombo,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,t_h.name AS types_equip FROM equipments e 
+        LEFT JOIN loans l ON l.equipment_id = e.id LEFT JOIN sectors s ON s.id = l.sector_id 
+        INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
+        INNER JOIN suppliers sup ON sup.id = e.supplier_id 
+        INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id
+        ");
+
     else:
       $session->msg("d", $errors);
       redirect('relatorios.php', false);
     endif;
 
   } else {
-    $session->msg("d", "Select dates");
+    $session->msg("d", "Desculpe, não foi possível gerar o relatório!");
     redirect('relatorios.php', false);
   }
 ?>
 <!doctype html>
-<html lang="en-US">
+<html lang="pt-br">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Default Page Title</title>
+   <title>Relatório de Equipamentos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -46,13 +58,13 @@ $results = '';
       width: 980px;
       margin: 0 auto;
     }
-     .sale-head{
+     .head{
        margin: 40px 0;
        text-align: center;
-     }.sale-head h1,.sale-head strong{
+     }.head h1,.head strong{
        padding: 10px 20px;
        display: block;
-     }.sale-head h1{
+     }.head h1{
        margin: 0;
        border-bottom: 1px solid #212121;
      }.table>thead:first-child>tr:first-child>th{
@@ -63,69 +75,49 @@ $results = '';
        border: 1px solid #ededed;
      }table tbody tr td{
        vertical-align: middle;
-     }.sale-head,table.table thead tr th,table tbody tr td,table tfoot tr td{
+     }.head,table.table thead tr th,table tbody tr td,table tfoot tr td{
        border: 1px solid #212121;
        white-space: nowrap;
-     }.sale-head h1,table thead tr th,table tfoot tr td{
+     }.head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
-     }tfoot{
-       color:#000;
-       text-transform: uppercase;
-       font-weight: 500;
      }
    </style>
 </head>
 <body>
-  <?php if($results): ?>
+  <?php if($all_equips): ?>
     <div class="page-break">
-       <div class="sale-head pull-right">
-           <h1>Sales Report</h1>
-           <strong><?php if(isset($start_date)){ echo $start_date;}?> To <?php if(isset($end_date)){echo $end_date;}?> </strong>
+       <div class="head pull-">
+           <h1>Relatório de Equipamentos</h1>
+           <strong>Relatório gerado às <?= strftime('%H:%M em %d/%m/%Y', strtotime(make_date())) ?></strong>
        </div>
       <table class="table table-border">
         <thead>
           <tr>
-              <th>Date</th>
-              <th>Product Title</th>
-              <th>Buying Price</th>
-              <th>Selling Price</th>
-              <th>Total Qty</th>
-              <th>TOTAL</th>
+              <th>#</th>             
+              <th>Tombo</th>
+              <th>Tipo de Equipamento</th>
+              <th>Usuário Responsável</th>              
+              <th>Setor</th>
+              <th>Fabricante</th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach($results as $result): ?>
+          <?php foreach($all_equips as $result): ?>
            <tr>
-              <td class=""><?php echo remove_junk($result['date']);?></td>
-              <td class="desc">
-                <h6><?php echo remove_junk(ucfirst($result['name']));?></h6>
-              </td>
-              <td class="text-right"><?php echo remove_junk($result['buy_price']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['sale_price']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['total_sales']);?></td>
-              <td class="text-right"><?php echo remove_junk($result['total_saleing_price']);?></td>
+              <td class=""><?= count_id(); ?></td>              
+              <td><?= remove_junk($result['tombo']);?></td>
+              <td><?= remove_junk($result['types_equip']);?></td>              
+              <td><?php if(empty($result['responsible_user'])): echo "SUINFOR"; else: echo remove_junk($result['responsible_user']); endif;?></td>
+              <td><?php if(empty($result['sector'])): echo "SUINFOR"; else: echo remove_junk($result['sector']); endif;?></td>
+              <td><?= remove_junk($result['manufacturer']);?></td>
           </tr>
         <?php endforeach; ?>
-        </tbody>
-        <tfoot>
-         <tr class="text-right">
-           <td colspan="4"></td>
-           <td colspan="1">Grand Total</td>
-           <td> $
-           <?php echo number_format(total_price($results)[0], 2);?>
-          </td>
-         </tr>
-         <tr class="text-right">
-           <td colspan="4"></td>
-           <td colspan="1">Profit</td>
-           <td> $<?php echo number_format(total_price($results)[1], 2);?></td>
-         </tr>
-        </tfoot>
+        </tbody>        
       </table>
     </div>
   <?php
     else:
-        $session->msg("d", "Sorry no sales has been found. ");
+        $session->msg("d", "Desculpe, nenhum equipamento encontrado!");
         redirect('relatorios.php', false);
      endif;
   ?>

@@ -7,7 +7,7 @@ class MySqli_DB {
     public $query_id;
 
     function __construct() {
-      $this->db_connect();
+      $this->db_connect();      
     }
 
 /*--------------------------------------------------------------*/
@@ -16,6 +16,8 @@ class MySqli_DB {
 public function db_connect()
 {
   $this->con = mysqli_connect(DB_HOST,DB_USER,DB_PASS);
+  $this->con->set_charset("utf8");
+  
   if(!$this->con)
          {
            //die(" Falha ao conectar com o banco de dados:". mysqli_connect_error());

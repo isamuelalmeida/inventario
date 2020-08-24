@@ -42,8 +42,9 @@ function suggetion() {
          e.preventDefault();
      });
 
- }
-  $('#sug-form').submit(function(e) {
+}
+
+$('#sug-form').submit(function(e) {
       var formData = {
           'e_tombo' : $('input[name=tombo]').val()
       };
@@ -64,23 +65,47 @@ function suggetion() {
                 $('#equipment_info').html(data).show();
             });
       e.preventDefault();
-  });
+});
 
-  $(document).ready(function() {
+$(document).ready(function() {
 
     //tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
     $('.submenu-toggle').click(function () {
-       $(this).parent().children('ul.submenu').toggle(200);
+        $(this).parent().children('ul.submenu').toggle(200);
     });
     //Suggestions for finding product names
     suggetion();
 
-    $('.datepicker')
-        .datepicker({
-            format: 'yyyy-mm-dd',
-            todayHighlight: true,
-            autoclose: true
-        });
-  });
+    if($('.datatable-active').length)
+    $('.datatable-active').DataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "pageLength": 10,
+        "lengthMenu": [ [12, 24, 36, -1], [12, 24, 36, "All"] ],
+        "oLanguage": {
+            "sLengthMenu": "",
+            //"sLengthMenu": "Mostrar _MENU_ registros por página",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+            "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
+            "sInfoFiltered": "(filtrado de _MAX_ registros)",
+            "sSearch": "Pesquisar",
+            "oPaginate": {
+                "sFirst": "Início",
+                "sPrevious": "Anterior",
+                "sNext": "Próximo",
+                "sLast": "Último"
+            }
+        },
+        "aaSorting": [[0, 'asc']],
+        "aoColumnDefs": [
+            {"orderable": false}
+
+        ]
+    });
+
+});
+
+  

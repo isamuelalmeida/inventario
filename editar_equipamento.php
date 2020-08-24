@@ -80,12 +80,25 @@ if(!$equipment){
                   <div class="col-md-9">
                     <div class="input-group">
                       <span class="input-group-addon">
-                       <i class="glyphicon glyphicon-th-large"></i>
+                       <i class="glyphicon glyphicon-tags"></i>
                       </span>
                       <input type="text" class="form-control" name="equipment-specifications" placeholder="Especificações do Equipamento" value="<?= $equipment['specifications'] ?>" required>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">              
+                  <div class="col-md-12">
+                    <div class= "input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-bookmark"></i>
+                      </span>
+                      <input type="text" class="form-control" name="equipment-obs" placeholder="Observações sobre o Equipamento" value="<?= $equipment['obs'] ?>">
+                    </div>
+                  </div>
+                </div> 
               </div>
 
               <div class="form-group">

@@ -26,12 +26,13 @@ $loans = find_all_loan();
          </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered">
+          <table class="table table-bordered datatable-active">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>                
                 <th> Tombo</th>
                 <th> Especificações </th>
+                <th class="text-center" style="width: 10%;"> Tipo de Equipamento </th>
                 <th class="text-center" style="width: 10%;"> Setor </th>
                 <th class="text-center" style="width: 10%;"> Usuário Responsável </th>
                 <th class="text-center" style="width: 10%;"> Data do empréstimo </th>
@@ -44,13 +45,14 @@ $loans = find_all_loan();
                 <td class="text-center"><?= count_id();?></td>
                 <td class="text-center"><?= remove_junk($loan['tombo']); ?></td>
                 <td><?= remove_junk($loan['specifications']); ?></td>
+                <td class="text-center"><?= remove_junk($loan['type_equip']); ?></td>                
                 <td class="text-center"><?= remove_junk($loan['sector']); ?></td>                
                 <td class="text-center"><?= remove_junk($loan['responsible_user']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['loan_date']); ?></td>                
+                <td class="text-center"><?= strftime('%d/%m/%Y', strtotime($loan['loan_date'])); ?></td>                
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="editar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-warning btn-xs"  title="Editar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-pencil"></span>
+                    <a href="editar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-xs btn-warning"  title="Editar" data-toggle="tooltip">
+                      <span class="glyphicon glyphicon-edit"></span>
                     </a>
                     <button title="Finalizar empréstimo" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#launchModal-<?= (int)$loan['id'];?>">
                       <span class="glyphicon glyphicon-share-alt"></span>

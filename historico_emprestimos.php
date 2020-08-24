@@ -23,7 +23,7 @@ $loans = find_all_loan_history();
           </strong>          
         </div>
         <div class="panel-body">
-          <table class="table table-bordered">
+          <table class="table table-bordered datatable-active">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>                
