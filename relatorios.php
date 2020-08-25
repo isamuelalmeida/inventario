@@ -30,21 +30,28 @@ $all_sector = find_all('sectors');
         <form class="clearfix" method="post" action="processar_relatorio.php" target="_blank">
           <div class="form-group">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="input-group">
                   <span class="input-group-addon">
                     <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="number" class="form-control" name="equipment-tombo" placeholder="Número Tombo">
+                  <input type="number" class="form-control" name="equipment-tombo" placeholder="Tombo">
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="input-group">
                   <span class="input-group-addon">
                     <i class="glyphicon glyphicon-th-large"></i>
                   </span>
                   <input type="text" class="form-control" name="equipment-specifications" placeholder="Especificações do Equipamento">
                 </div>
+              </div>
+              <div class="col-md-3">
+                <select class="form-control" name="equipment-loan">
+                  <option value="1">Todos Equipamentos</option>
+                  <option value="2">Somente emprestados</option>
+                  <option value="3">Somente não emprestados</option>
+                </select>
               </div>
               <div class="col-md-3">
                 <select class="form-control" name="equipment-sector">

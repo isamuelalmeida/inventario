@@ -2,7 +2,7 @@
 
 ### Informações do Projeto
 
-1. Importe o script SQL inventario.sql para dentro do seu banco de dados MYSQL.
+1. Importe o script SQL /database/script.sql para dentro do seu banco de dados no MYSQL.
 
 2. Modifique o includes/config.php e altere as variáveis para realização da conexão com o banco de dados.
 

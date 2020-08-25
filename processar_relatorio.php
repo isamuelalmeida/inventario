@@ -18,13 +18,7 @@ $results = '';
       $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
       $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));
 
-      $all_equips = find_by_sql("
-        SELECT e.tombo,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,t_h.name AS types_equip FROM equipments e 
-        LEFT JOIN loans l ON l.equipment_id = e.id LEFT JOIN sectors s ON s.id = l.sector_id 
-        INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
-        INNER JOIN suppliers sup ON sup.id = e.supplier_id 
-        INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id
-        ");
+      $all_equips = issue_reports();
 
     else:
       $session->msg("d", $errors);

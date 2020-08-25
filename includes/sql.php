@@ -297,4 +297,40 @@ function tableExists($table){
 }
 
 
+
+/*--------------------------------------------------------------*/
+/* Reports: Function to issue reports
+/*--------------------------------------------------------------*/
+function issue_reports(){
+  global $db;
+  $sql  = "SELECT e.tombo,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,t_h.name AS types_equip FROM equipments e 
+        LEFT JOIN loans l ON l.equipment_id = e.id LEFT JOIN sectors s ON s.id = l.sector_id 
+        INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
+        INNER JOIN suppliers sup ON sup.id = e.supplier_id 
+        INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id";
+
+  return find_by_sql($sql);
+}
+
+
+/*--------------------------------------------------------------*/
+/* Create pie Chart for Dashboard with Types Equipments
+/*--------------------------------------------------------------*/
+function pieChartTypesEquip(){
+  global $db;
+  $sql = "SELECT COUNT(e.types_equip_id) AS count, t_e.name FROM equipments e INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id GROUP BY e.types_equip_id";
+  return find_by_sql($sql);
+}
+
+/*--------------------------------------------------------------*/
+/* Create bar Chart for Dashboard with Loans per Sector
+/*--------------------------------------------------------------*/
+function barChartLoanPerSector(){
+  global $db;
+  $sql = "SELECT COUNT(l.sector_id) AS count, s.name FROM loans l INNER JOIN sectors s ON s.id = l.sector_id GROUP BY l.sector_id";
+  return find_by_sql($sql);
+}
+
+
+
 ?>
