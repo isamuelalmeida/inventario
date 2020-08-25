@@ -32,16 +32,16 @@ body{
 }
 
 .bg-green{
-  background-color: #A3C86D;
+  background-color: #91ce38;
 }
 .bg-blue{
-  background-color: #7ACBEE;
+  background-color: #21afec;
 }
 .bg-yellow{
-  background-color: #FDD761;
+  background-color: #ffc922;
 }
 .bg-red{
-  background-color: #FF7857;
+  background-color: #ff552b;
 }
 .panel-default >.panel-heading{
   background-color: #f5f5f5;
@@ -157,7 +157,7 @@ body{
   padding: 65px 0 0;
   height: 100%;
   width: 250px;
-  background: #2a3542;
+  background: #272c33;
   border-right: 1px solid #ddd;
   text-align: center;
 }.sidebar ul li:hover,.submenu ul li:hover{
@@ -174,7 +174,7 @@ body{
 }.sidebar ul li a:hover {
   color: white;
 }.sidebar ul li a,ul.submenu li a {
-  color: #aeb2b7;
+  color: #ccc;
   display: block;
   overflow: hidden;
   position: relative;
