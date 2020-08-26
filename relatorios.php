@@ -38,7 +38,7 @@ $all_sector = find_all('sectors');
                   <input type="number" class="form-control" name="equipment-tombo" placeholder="Tombo">
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="input-group">
                   <span class="input-group-addon">
                     <i class="glyphicon glyphicon-th-large"></i>
@@ -46,72 +46,97 @@ $all_sector = find_all('sectors');
                   <input type="text" class="form-control" name="equipment-specifications" placeholder="Especificações do Equipamento">
                 </div>
               </div>
-              <div class="col-md-3">
-                <select class="form-control" name="equipment-loan">
+              <div class="col-md-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-th-large"></i>
+                  </span>
+                  <input type="text" class="form-control" name="equipment-responsible_user" placeholder="Usuário Responsável">
+                </div>
+              </div>                            
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <select id="loans" class="form-control" name="equipment-loan">
                   <option value="1">Todos Equipamentos</option>
                   <option value="2">Somente emprestados</option>
                   <option value="3">Somente não emprestados</option>
                 </select>
               </div>
-              <div class="col-md-3">
-                <select class="form-control" name="equipment-sector">
+              <div class="col-md-4">
+                <select class="form-control" name="equipment-type_equip">
+                  <option value="">Tipo de Equipamento</option>
+                  <?php  foreach ($all_types_equip as $t_equip): ?>
+                  <option value="<?= (int)$t_equip['id'] ?>">
+                    <?= $t_equip['name'] ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select id="sector" class="form-control" name="equipment-sector">
                   <option value="">Setor</option>
                   <?php  foreach ($all_sector as $sector): ?>
-                  <option value="<?= (int)$sector['id'] ?>">
+                    <?php if(strtoupper($sector['name']) != strtoupper("suinfor")): ?>
+                    <option value="<?= (int)$sector['id'] ?>">
                       <?= $sector['name'] ?></option>
+                  <?php endif; endforeach; ?>
+                </select>
+              </div>
+                          
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <select class="form-control" name="equipment-manufacturer">
+                  <option value="">Fabricante</option>
+                  <?php  foreach ($all_manufacturer as $man): ?>
+                  <option value="<?= (int)$man['id'] ?>">
+                    <?= $man['name'] ?></option>
                   <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control" name="equipment-supplier">
+                <option value="">Fornecedor</option>
+                <?php  foreach ($all_supplier as $sup): ?>
+                <option value="<?= (int)$sup['id'] ?>">
+                  <?= $sup['name'] ?></option>
+                <?php endforeach; ?>
+                </select>
+              </div>                
+              <div class="col-md-4">
+               <select class="form-control" name="equipment-situation">
+                <option value="">Situação</option>
+                <?php  foreach ($all_situation as $sit): ?>
+                <option value="<?= (int)$sit['id'] ?>">
+                  <?= $sit['name'] ?></option>
+                <?php endforeach; ?>
                 </select>
               </div>
             </div>
           </div>
+
           <div class="form-group">
-            <div class="row">
-              <div class="col-md-3">
-                <select class="form-control" name="equipment-type_equip">
-                  <option value="">Tipo de Equipamento</option>
-                  <?php  foreach ($all_types_equip as $t_equip): ?>
-                    <option value="<?= (int)$t_equip['id'] ?>">
-                      <?= $t_equip['name'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                 <select class="form-control" name="equipment-supplier">
-                  <option value="">Fornecedor</option>
-                  <?php  foreach ($all_supplier as $sup): ?>
-                    <option value="<?= (int)$sup['id'] ?>">
-                      <?= $sup['name'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select class="form-control" name="equipment-manufacturer">
-                    <option value="">Fabricante</option>
-                    <?php  foreach ($all_manufacturer as $man): ?>
-                      <option value="<?= (int)$man['id'] ?>">
-                        <?= $man['name'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                   <select class="form-control" name="equipment-situation">
-                    <option value="">Situação</option>
-                    <?php  foreach ($all_situation as $sit): ?>
-                      <option value="<?= (int)$sit['id'] ?>">
-                        <?= $sit['name'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-               <button type="submit" name="submit" class="btn btn-primary">Gerar Relatório</button>
-             </div>
-           </form>
+           <button type="submit" name="submit" class="btn btn-primary">Gerar Relatório</button>
          </div>
+       </form>
 
-       </div>
      </div>
-
    </div>
-   <?php include_once('layouts/footer.php'); ?>
+ </div>
+</div>
+
+<?php
+$scripts = "
+  $('#loans').change(function(){
+    if($('#loans').val() == 3) $('#sector').hide();
+    else $('#sector').show();
+  });
+"
+?>
+
+<?php include_once('layouts/footer.php'); ?>

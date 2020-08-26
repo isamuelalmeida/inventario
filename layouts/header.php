@@ -1,4 +1,7 @@
-<?php $user = current_user(); ?>
+<?php
+$user = current_user();
+$scripts = null;
+?>
 <!DOCTYPE html>
   <html lang="pt-br">
     <head>
@@ -12,7 +15,8 @@
 
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="assets/css/main.css" />
   </head>
   <body>

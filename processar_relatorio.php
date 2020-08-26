@@ -6,19 +6,20 @@ $results = '';
    page_require_level(2);
 ?>
 <?php
-  if(isset($_POST['submit'])){
-    $req_fields = array('equipment-tombo','equipment-specifications','equipment-sector','equipment-type_equip','equipment-supplier','equipment-manufacturer','equipment-situation');
-    //validate_fields($req_fields);
+  if(isset($_POST['submit'])){    
 
     if(empty($errors)):
       $equip_tombo  = remove_junk($db->escape($_POST['equipment-tombo']));
       $equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
+      $equip_responsible_user  = remove_junk($db->escape($_POST['equipment-responsible_user']));
+      $equip_loan  = remove_junk($db->escape($_POST['equipment-loan']));      
       $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
+      $equip_sector  = remove_junk($db->escape($_POST['equipment-sector']));
       $equip_supplier   = remove_junk($db->escape($_POST['equipment-supplier']));
       $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
       $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));
 
-      $all_equips = issue_reports();
+      $all_equips = issue_reports($equip_tombo, $equip_specifications, $equip_responsible_user, $equip_loan, $equip_type_equip, $equip_sector, $equip_supplier, $equip_manufacturer, $equip_situation);
 
     else:
       $session->msg("d", $errors);
@@ -35,13 +36,10 @@ $results = '';
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Relatório de Equipamentos</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
    <style>
    @media print {
-     html,body{
-        font-size: 9.5pt;
-        margin: 0;
-        padding: 0;
+     html,body{       
      }.page-break {
        page-break-before:always;
        width: auto;
@@ -71,9 +69,12 @@ $results = '';
        vertical-align: middle;
      }.head,table.table thead tr th,table tbody tr td,table tfoot tr td{
        border: 1px solid #212121;
-       white-space: nowrap;
-     }.head h1,table thead tr th,table tfoot tr td{
-       background-color: #f8f8f8;
+     }
+
+     .font-12 {
+      font-size: 12px !important;
+     }.font-15 {
+      font-size: 15px !important;
      }
    </style>
 </head>
@@ -81,15 +82,16 @@ $results = '';
   <?php if($all_equips): ?>
     <div class="page-break">
        <div class="head pull-">
-           <h1>Relatório de Equipamentos</h1>
+           <h2>Relatório de Equipamentos da STC</h2>
            <strong>Relatório gerado às <?= strftime('%H:%M em %d/%m/%Y', strtotime(make_date())) ?></strong>
        </div>
-      <table class="table table-border">
+      <table class="table table-border table-striped table-condensed">
         <thead>
-          <tr>
+          <tr class="font-15 warning">
               <th>#</th>             
               <th>Tombo</th>
               <th>Tipo de Equipamento</th>
+              <th>Especificações</th>
               <th>Usuário Responsável</th>              
               <th>Setor</th>
               <th>Fabricante</th>
@@ -97,10 +99,11 @@ $results = '';
         </thead>
         <tbody>
           <?php foreach($all_equips as $result): ?>
-           <tr>
+           <tr class="font-12">
               <td class=""><?= count_id(); ?></td>              
               <td><?= remove_junk($result['tombo']);?></td>
               <td><?= remove_junk($result['types_equip']);?></td>              
+              <td><?= remove_junk($result['specifications']);?></td>              
               <td><?php if(empty($result['responsible_user'])): echo "SUINFOR"; else: echo remove_junk($result['responsible_user']); endif;?></td>
               <td><?php if(empty($result['sector'])): echo "SUINFOR"; else: echo remove_junk($result['sector']); endif;?></td>
               <td><?= remove_junk($result['manufacturer']);?></td>

@@ -83,7 +83,7 @@ if(isset($_POST['update-pass'])) {
             </div>
             <div class="form-group">
                   <label for="username" class="control-label">Usuário</label>
-                  <input type="text" class="form-control" name="username" value="<?= remove_junk(ucwords($e_user['username'])); ?>" required>
+                  <input type="text" class="form-control" name="username" value="<?= remove_junk($e_user['username']); ?>" required>
             </div>
             <div class="form-group">
               <label for="level">Papel do Usuário</label>
