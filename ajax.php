@@ -58,7 +58,7 @@
           $html  .= "</td>";
 
           $html  .= "<td>";
-          $html  .= "<input type=\"date\" class=\"form-control\" name=\"loan_date\" value=\"2020-08-11\" required>";
+          $html  .= "<input type=\"date\" class=\"form-control\" name=\"loan_date\" required>";
           $html  .= "</td>";
 
           $html  .= "<td>";

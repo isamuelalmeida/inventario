@@ -59,7 +59,6 @@ $('#sug-form').submit(function(e) {
             .done(function(data) {
                 //console.log(data);
                 $('#equipment_info').html(data).show();
-                $('.datePicker').datepicker('update', new Date());
 
             }).fail(function() {
                 $('#equipment_info').html(data).show();
@@ -78,6 +77,7 @@ $(document).ready(function() {
     //Suggestions for finding product names
     suggetion();
 
+    // Datatables for Normal Tables
     if($('.datatable-active').length)
     $('.datatable-active').DataTable({
         "bJQueryUI": true,
@@ -98,7 +98,54 @@ $(document).ready(function() {
                 "sNext": "Próximo",
                 "sLast": "Último"
             }
+        },        
+        "aaSorting": [[0, 'asc']],
+        "aoColumnDefs": [
+            {"orderable": false}
+
+        ]
+    });
+
+  // Datatables for Tables with Buttons
+    if($('.datatable-button-active').length)
+    $('.datatable-button-active').DataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "pageLength": 10,
+        "lengthMenu": [ [12, 24, 36, -1], [12, 24, 36, "All"] ],
+        "oLanguage": {
+            "sLengthMenu": "",
+            //"sLengthMenu": "Mostrar _MENU_ registros por página",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+            "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
+            "sInfoFiltered": "(filtrado de _MAX_ registros)",
+            "sSearch": "Pesquisar",
+            "oPaginate": {
+                "sFirst": "Início",
+                "sPrevious": "Anterior",
+                "sNext": "Próximo",
+                "sLast": "Último"
+            }
         },
+        "responsive": true,
+        "dom": '<"html5buttons"B>lTfgitp',
+        "buttons": [
+            {"extend": 'copy'},
+            {"extend": 'csv'},
+            {"extend": 'excel', "title": 'Relatórios de Equipamentos'},
+            {"extend": 'pdf', "title": 'Relatórios de Equipamentos'},
+        {"extend": 'print',
+             customize: function (win){
+                    $(win.document.body).addClass('white-bg');
+                    $(win.document.body).css('font-size', '10px');
+
+                    $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+            }
+            }
+        ],
         "aaSorting": [[0, 'asc']],
         "aoColumnDefs": [
             {"orderable": false}

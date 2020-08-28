@@ -56,12 +56,7 @@ $all_users = find_all_user();
                  <div class="btn-group">
                   <a href="editar_usuario.php?id=<?= (int)$a_user['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                     <i class="glyphicon glyphicon-edit"></i>
-                  </a>
-                  <button title="Remover" type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#launchModal-<?= (int)$a_user['id'];?>">
-                    <i class="glyphicon glyphicon-remove"></i>
-                  </button>
-
-                  <?php $action="deletar_usuario.php"; $id=(int)$a_user['id']; include('layouts/modal-confirmacao.php'); ?>
+                  </a>                  
                   
                 </div>
               </td>

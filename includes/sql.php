@@ -303,24 +303,27 @@ function tableExists($table){
 /*--------------------------------------------------------------*/
 function issue_reports($tombo, $specifications, $responsible_user, $loan, $type_equip, $sector, $supplier, $manufacturer, $situation){
   global $db;
-  $sql  = "SELECT e.tombo,e.specifications,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,t_h.name AS types_equip FROM equipments e 
+  $sql  = "SELECT e.tombo,e.specifications,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
         LEFT JOIN loans l ON l.equipment_id = e.id 
         LEFT JOIN sectors s ON s.id = l.sector_id 
         INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
         INNER JOIN suppliers sup ON sup.id = e.supplier_id 
+        INNER JOIN situations sit ON sit.id = e.situation_id 
         INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id WHERE e.id ";
 
   if($loan === "2"){
-    $sql  = "SELECT e.tombo,e.specifications,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,t_h.name AS types_equip FROM equipments e 
+    $sql  = "SELECT e.tombo,e.specifications,l.responsible_user,s.name AS sector,m.name AS manufacturer,sup.name AS supplier,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
         INNER JOIN loans l ON l.equipment_id = e.id 
         INNER JOIN sectors s ON s.id = l.sector_id 
         INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
         INNER JOIN suppliers sup ON sup.id = e.supplier_id 
+        INNER JOIN situations sit ON sit.id = e.situation_id 
         INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id WHERE e.id ";
   } elseif($loan === "3") {
-    $sql  = "SELECT e.tombo,e.specifications,m.name AS manufacturer,sup.name AS supplier,t_h.name AS types_equip FROM equipments e 
+    $sql  = "SELECT e.tombo,e.specifications,m.name AS manufacturer,sup.name AS supplier,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
         INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
         INNER JOIN suppliers sup ON sup.id = e.supplier_id 
+        INNER JOIN situations sit ON sit.id = e.situation_id 
         INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id 
         WHERE e.id NOT IN (SELECT equipment_id FROM loans) ";
   }

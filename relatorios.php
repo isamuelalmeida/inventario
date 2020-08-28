@@ -1,5 +1,5 @@
 <?php ob_start();
-$page_title = 'Relatórios';
+$page_title = 'Relatório de Equipamentos';
 require_once('includes/load.php');
   // Checkin What level user has permission to view this page
 page_require_level(2);
@@ -9,6 +9,22 @@ $all_supplier = find_all('suppliers');
 $all_manufacturer = find_all('manufacturers');
 $all_situation = find_all('situations');
 $all_sector = find_all('sectors');
+
+// xxx1
+if(isset($_POST['submit'])):
+  $equip_tombo  = remove_junk($db->escape($_POST['equipment-tombo']));
+  $equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
+  $equip_responsible_user  = remove_junk($db->escape($_POST['equipment-responsible_user']));
+  $equip_loan  = remove_junk($db->escape($_POST['equipment-loan']));      
+  $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
+  $equip_sector  = remove_junk($db->escape($_POST['equipment-sector']));
+  $equip_supplier   = remove_junk($db->escape($_POST['equipment-supplier']));
+  $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
+  $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));
+
+  $all_equips = issue_reports($equip_tombo, $equip_specifications, $equip_responsible_user, $equip_loan, $equip_type_equip, $equip_sector, $equip_supplier, $equip_manufacturer, $equip_situation);
+
+endif;
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -27,7 +43,7 @@ $all_sector = find_all('sectors');
         </strong>
       </div>
       <div class="panel-body">
-        <form class="clearfix" method="post" action="processar_relatorio.php" target="_blank">
+        <form class="clearfix" method="post" action="relatorios.php">
           <div class="form-group">
             <div class="row">
               <div class="col-md-2">
@@ -129,6 +145,51 @@ $all_sector = find_all('sectors');
    </div>
  </div>
 </div>
+
+<?php if(!empty($all_equips)): ?>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-border table-striped datatable-button-active">
+      <thead>
+        <tr class="info">
+            <th>#</th>             
+            <th>Tombo</th>
+            <th style="width: 20%;">Tipo de Equipamento</th>
+            <th>Especificações</th>
+            <th>Usuário Responsável</th>              
+            <th>Setor</th>
+            <th>Fabricante</th>
+            <th>Situação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($all_equips as $result): ?>
+           <tr>
+              <td>#<?= count_id(); ?></td>              
+              <td><?= remove_junk($result['tombo']);?></td>
+              <td><?= remove_junk($result['types_equip']);?></td>              
+              <td><?= remove_junk($result['specifications']);?></td>              
+              <td><?php if(empty($result['responsible_user'])): echo "SUINFOR"; else: echo remove_junk($result['responsible_user']); endif;?></td>
+              <td><?php if(empty($result['sector'])): echo "SUINFOR"; else: echo remove_junk($result['sector']); endif;?></td>
+              <td><?= remove_junk($result['manufacturer']);?></td>
+              <td><?= remove_junk($result['situation']);?></td>
+          </tr>
+        <?php endforeach; ?>        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<?php
+elseif(isset($all_equips)):
+  $output  = "<div class=\"alert alert-danger\">";
+  $output .= "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>";
+  $output .= "Desculpe, nenhum equipamento encontrado!";
+  $output .= "</div>";
+  echo $output;
+endif;
+
+?>
 
 <?php
 $scripts = "

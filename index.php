@@ -23,8 +23,11 @@
 	
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-65">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-65">				
 				<form method="post" action="auth.php" class="login100-form">
+					<div class="text-center">
+						<img  width="70" src="assets/img/favicon.png" alt="Inventário">
+					</div>
 					<span class="login100-form-title p-b-65">
 						Inventário
 					</span>
