@@ -33,8 +33,8 @@ function validate_fields($var){
   global $errors;
   foreach ($var as $field) {
     $val = remove_junk($_POST[$field]);
-    if(isset($val) && $val==''){
-      $errors = $field ." can't be blank.";
+    if(isset($val) && empty($val)){
+      $errors = "Há campos importantes que não podem ficar vazios.";
       return $errors;
     }
   }

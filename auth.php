@@ -1,5 +1,5 @@
-<?php ob_start(); include_once('includes/load.php'); ?>
-<?php
+<?php ob_start(); include_once('includes/load.php');
+
 $req_fields = array('username','password' );
 validate_fields($req_fields);
 $username = remove_junk($_POST['username']);
@@ -9,10 +9,10 @@ if(empty($errors)){
   $user_id = authenticate($username, $password);
   if($user_id){
     //create session with id
-     $session->login($user_id);
+    $session->login($user_id);
     //Update Sign in time
-     updateLastLogIn($user_id);
-     redirect('dashboard.php',false);
+    updateLastLogIn($user_id);
+    redirect('dashboard.php',false);
 
   } else {
     $session->msg("d", "Desculpe, Usuário/Senha incorretos.");
@@ -20,8 +20,8 @@ if(empty($errors)){
   }
 
 } else {
-   $session->msg("d", $errors);
-   redirect('index.php',false);
+  $session->msg("d", $errors);
+  redirect('index.php',false);
 }
 
 ?>

@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 10.32.128.14
--- Tempo de geração: 14/08/2020 às 19:58
--- Versão do servidor: 10.3.22-MariaDB-0+deb10u1
--- Versão do PHP: 7.4.8
+-- Host: mysql-inventario
+-- Tempo de geração: 31-Ago-2020 às 20:25
+-- Versão do servidor: 10.5.5-MariaDB-1:10.5.5+maria~focal
+-- versão do PHP: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `inventory`
+-- Banco de dados: `inventario`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `equipments`
+-- Estrutura da tabela `equipments`
 --
 
 CREATE TABLE `equipments` (
@@ -33,7 +33,6 @@ CREATE TABLE `equipments` (
   `specifications` varchar(250) NOT NULL,
   `obs` varchar(250) DEFAULT NULL,
   `types_equip_id` int(11) NOT NULL,
-  `supplier_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,
   `situation_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
@@ -42,10 +41,18 @@ CREATE TABLE `equipments` (
   `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `equipments`
+--
+
+INSERT INTO `equipments` (`id`, `tombo`, `specifications`, `obs`, `types_equip_id`, `manufacturer_id`, `situation_id`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
+(22, 801, 'notebook 01', '', 1, 1, 1, 1, '2020-08-31 13:46:55', NULL, NULL),
+(23, 802, 'nobreak 01', '', 7, 5, 1, 1, '2020-08-31 13:47:40', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `loans`
+-- Estrutura da tabela `loans`
 --
 
 CREATE TABLE `loans` (
@@ -60,10 +67,17 @@ CREATE TABLE `loans` (
   `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `loans`
+--
+
+INSERT INTO `loans` (`id`, `equipment_id`, `responsible_user`, `sector_id`, `loan_date`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
+(12, 22, 'Carlos andré', 4, '2020-08-31', 1, '2020-08-31 13:48:09', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `loan_historys`
+-- Estrutura da tabela `loan_historys`
 --
 
 CREATE TABLE `loan_historys` (
@@ -79,7 +93,7 @@ CREATE TABLE `loan_historys` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `manufacturers`
+-- Estrutura da tabela `manufacturers`
 --
 
 CREATE TABLE `manufacturers` (
@@ -88,7 +102,7 @@ CREATE TABLE `manufacturers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `manufacturers`
+-- Extraindo dados da tabela `manufacturers`
 --
 
 INSERT INTO `manufacturers` (`id`, `name`) VALUES
@@ -101,7 +115,7 @@ INSERT INTO `manufacturers` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `sectors`
+-- Estrutura da tabela `sectors`
 --
 
 CREATE TABLE `sectors` (
@@ -110,7 +124,7 @@ CREATE TABLE `sectors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `sectors`
+-- Extraindo dados da tabela `sectors`
 --
 
 INSERT INTO `sectors` (`id`, `name`) VALUES
@@ -122,7 +136,7 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `situations`
+-- Estrutura da tabela `situations`
 --
 
 CREATE TABLE `situations` (
@@ -131,7 +145,7 @@ CREATE TABLE `situations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `situations`
+-- Extraindo dados da tabela `situations`
 --
 
 INSERT INTO `situations` (`id`, `name`) VALUES
@@ -143,26 +157,7 @@ INSERT INTO `situations` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `suppliers`
---
-
-CREATE TABLE `suppliers` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Despejando dados para a tabela `suppliers`
---
-
-INSERT INTO `suppliers` (`id`, `name`) VALUES
-(2, 'Technocopy'),
-(1, 'Unitech');
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `types_equips`
+-- Estrutura da tabela `types_equips`
 --
 
 CREATE TABLE `types_equips` (
@@ -171,7 +166,7 @@ CREATE TABLE `types_equips` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `types_equips`
+-- Extraindo dados da tabela `types_equips`
 --
 
 INSERT INTO `types_equips` (`id`, `name`) VALUES
@@ -193,7 +188,7 @@ INSERT INTO `types_equips` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `users`
+-- Estrutura da tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -208,17 +203,17 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Despejando dados para a tabela `users`
+-- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Administrador', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.jpg', 1, '2020-08-14 16:48:55'),
-(5, 'Teste x', 'user', '12dea96fec20593566ab75692c9949596833adc9', 2, 'no_image.jpg', 1, '2020-08-14 16:42:28');
+(1, 'Administrador', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.jpg', 1, '2020-08-31 13:46:22'),
+(5, 'Usuário Operacional', 'user', '12dea96fec20593566ab75692c9949596833adc9', 2, 'no_image.jpg', 1, '2020-08-14 16:42:28');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `user_groups`
+-- Estrutura da tabela `user_groups`
 --
 
 CREATE TABLE `user_groups` (
@@ -229,100 +224,93 @@ CREATE TABLE `user_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Despejando dados para a tabela `user_groups`
+-- Extraindo dados da tabela `user_groups`
 --
 
 INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VALUES
 (1, 'Administrador', 1, 1),
-(2, 'Operacional', 2, 0);
+(2, 'Operacional', 2, 1);
 
 --
--- Índices de tabelas apagadas
+-- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `equipments`
+-- Índices para tabela `equipments`
 --
 ALTER TABLE `equipments`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `idx_tombo` (`tombo`);
 
 --
--- Índices de tabela `loans`
+-- Índices para tabela `loans`
 --
 ALTER TABLE `loans`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `loan_historys`
+-- Índices para tabela `loan_historys`
 --
 ALTER TABLE `loan_historys`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `manufacturers`
+-- Índices para tabela `manufacturers`
 --
 ALTER TABLE `manufacturers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Índices de tabela `sectors`
+-- Índices para tabela `sectors`
 --
 ALTER TABLE `sectors`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Índices de tabela `situations`
+-- Índices para tabela `situations`
 --
 ALTER TABLE `situations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Índices de tabela `suppliers`
---
-ALTER TABLE `suppliers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Índices de tabela `types_equips`
+-- Índices para tabela `types_equips`
 --
 ALTER TABLE `types_equips`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Índices de tabela `users`
+-- Índices para tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_level` (`user_level`);
 
 --
--- Índices de tabela `user_groups`
+-- Índices para tabela `user_groups`
 --
 ALTER TABLE `user_groups`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `group_level` (`group_level`);
 
 --
--- AUTO_INCREMENT de tabelas apagadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `loans`
 --
 ALTER TABLE `loans`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `loan_historys`
@@ -349,12 +337,6 @@ ALTER TABLE `situations`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de tabela `suppliers`
---
-ALTER TABLE `suppliers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT de tabela `types_equips`
 --
 ALTER TABLE `types_equips`
@@ -373,11 +355,11 @@ ALTER TABLE `user_groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Restrições para dumps de tabelas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `users`
+-- Limitadores para a tabela `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_level`) REFERENCES `user_groups` (`group_level`) ON DELETE CASCADE ON UPDATE CASCADE;
