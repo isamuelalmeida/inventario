@@ -13,7 +13,7 @@
     <ul class="nav submenu">
       <li><a href="emprestimos.php">Gerenciar Empréstimos</a> </li>
       <li><a href="historico_emprestimos.php">Histórico de Empréstimos</a> </li>
-   </ul>
+    </ul>
   </li>
   <li>
     <a href="relatorios.php" >

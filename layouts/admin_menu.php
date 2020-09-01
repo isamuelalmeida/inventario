@@ -11,15 +11,9 @@
       <span>Equipamentos</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="equipamentos.php">Gerenciar equipamentos</a> </li>
-       <li><a href="tipos_equipamento.php">Tipos de Equipamento</a> </li>
-   </ul>
-  </li>  
-  <li>
-    <a href="fornecedores.php" >
-      <i class="glyphicon glyphicon-indent-left"></i>
-      <span>Fornecedores</span>
-    </a>
+      <li><a href="equipamentos.php">Gerenciar equipamentos</a> </li>
+      <li><a href="tipos_equipamento.php">Tipos de Equipamento</a> </li>
+    </ul>
   </li>
   <li>
     <a href="fabricantes.php" >
@@ -47,7 +41,7 @@
     <ul class="nav submenu">
       <li><a href="emprestimos.php">Gerenciar Empréstimos</a> </li>
       <li><a href="historico_emprestimos.php">Histórico de Empréstimos</a> </li>
-   </ul>
+    </ul>
   </li>
   <li>
     <a href="relatorios.php" >
@@ -63,6 +57,6 @@
     <ul class="nav submenu">
       <li><a href="grupos.php">Gerenciar Grupos</a> </li>
       <li><a href="usuarios.php">Gerenciar Usuários</a> </li>
-   </ul>
+    </ul>
   </li>
 </ul>

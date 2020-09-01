@@ -20,7 +20,7 @@ $scripts = null;
     <link rel="stylesheet" href="assets/css/main.css" />
   </head>
   <body>
-  <?php  if ($session->isUserLoggedIn(true)): ?>
+  <?php if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
       <div class="logo pull-left"> Inventário </div>
       <div class="header-content">
@@ -63,9 +63,9 @@ $scripts = null;
       <?php include_once('operator_menu.php');?>      
 
       <?php endif;?>
+    </div>
 
-   </div>
-<?php endif;?>
+  <?php endif;?>
 
 <div class="page">
   <div class="container-fluid">
