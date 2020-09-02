@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Editar fabricante';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Editar fabricante';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -49,7 +50,7 @@ if(isset($_POST['edit_manufacturer'])){
       <div class="panel-body">
         <form method="post" action="editar_fabricante.php?id=<?= (int)$manufacturer['id'];?>">
           <div class="form-group">
-            <input type="text" class="form-control" name="manufacturer-name" required value="<?= remove_junk(ucfirst($manufacturer['name']));?>">
+            <input type="text" class="form-control" name="manufacturer-name" required autocomplete="off" value="<?= remove_junk(ucfirst($manufacturer['name']));?>">
           </div>
           <button type="submit" name="edit_manufacturer" class="btn btn-primary">Atualizar fabricante</button>
         </form>

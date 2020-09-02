@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Todos os tipos de equipamento';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Todos os tipos de equipamento';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -45,7 +46,7 @@ if(isset($_POST['types_equip'])){
       <div class="panel-body">
         <form method="post" action="tipos_equipamento.php">
           <div class="form-group">
-            <input type="text" class="form-control" name="tipos_equipamento-name" placeholder="Nome do tipo de equipamento" required>
+            <input type="text" class="form-control" name="tipos_equipamento-name" placeholder="Nome do tipo de equipamento" required autocomplete="off">
           </div>
           <button type="submit" name="types_equip" class="btn btn-primary">Novo tipo de equipamento</button>
         </form>

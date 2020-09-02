@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Relatório de Equipamentos';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Relatório de Equipamentos';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 

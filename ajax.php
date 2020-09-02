@@ -1,9 +1,8 @@
-<?php ob_start();
-require_once('includes/load.php');
-if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
-?>
-
 <?php
+require_once('includes/load.php');
+// Check if user is logged in
+if(!$session->isUserLoggedIn(true)) { redirect('dashboard.php', false);}
+
 // Auto suggetion
 $html = '';
 if(isset($_POST['equipment_tombo']) && strlen($_POST['equipment_tombo']))
@@ -25,8 +24,6 @@ if(isset($_POST['equipment_tombo']) && strlen($_POST['equipment_tombo']))
 
   echo json_encode($html);
 }
-?>
-<?php
 
 // find all equipment
 if(isset($_POST['e_tombo']) && strlen($_POST['e_tombo']))

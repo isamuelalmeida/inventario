@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Todos Usuários';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Todos Usuários';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 

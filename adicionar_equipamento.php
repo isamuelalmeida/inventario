@@ -1,7 +1,7 @@
 <?php
-ob_start();
-$page_title = 'Adicionar Equipamento';
 require_once('includes/load.php');
+
+$page_title = 'Adicionar Equipamento';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 $all_types_equip = find_all('types_equips');
@@ -59,11 +59,14 @@ if(isset($_POST['add_equipment'])){
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">
+			<div class="panel-heading clearfix">
 				<strong>
 					<span class="glyphicon glyphicon-th"></span>
 					<span>Adicionar Novo Equipamento</span>
 				</strong>
+				<div class="pull-right">
+		        	<a href="equipamentos.php" class="btn btn-danger">Listar equipamentos</a>
+		        </div>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -75,7 +78,7 @@ if(isset($_POST['add_equipment'])){
 										<span class="input-group-addon">
 											<i class="glyphicon glyphicon-th-large"></i>
 										</span>
-										<input type="number" class="form-control" name="equipment-tombo" placeholder="Número Tombo" required>
+										<input type="number" class="form-control" name="equipment-tombo" placeholder="Número Tombo" required autocomplete="off">
 									</div>
 								</div>
 								<div class="col-md-9">
@@ -135,7 +138,6 @@ if(isset($_POST['add_equipment'])){
 						</div>             
 
 						<button type="submit" name="add_equipment" class="btn btn-primary">Adicionar equipamento</button>
-						<a href="equipamentos.php" class="btn btn-danger">Cancelar</a>
 					</form>
 				</div>
 			</div>

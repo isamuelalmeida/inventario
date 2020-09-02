@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Todos os setores';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Todos os setores';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -46,7 +47,7 @@ if(isset($_POST['add_sector'])){
       <div class="panel-body">
         <form method="post" action="setores.php">
           <div class="form-group">
-            <input type="text" class="form-control" name="sector-name" placeholder="Nome do setor" required>
+            <input type="text" class="form-control" name="sector-name" placeholder="Nome do setor" required autocomplete="off">
           </div>
           <button type="submit" name="add_sector" class="btn btn-primary">Novo setor</button>
         </form>

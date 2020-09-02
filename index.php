@@ -1,6 +1,6 @@
 <?php
-ob_start();
 require_once('includes/load.php');
+// Check if user is logged in
 if($session->isUserLoggedIn(true)) { redirect('dashboard.php', false);}
 ?>
 

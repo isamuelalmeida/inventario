@@ -1,10 +1,11 @@
-<?php ob_start();
-$page_title = 'Todos os Equipamentos';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Todos os Equipamentos';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
-$equipments = join_equipment_table();
+$equipments = find_all_equipment();
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">

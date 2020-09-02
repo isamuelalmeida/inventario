@@ -1,5 +1,5 @@
 <?php
-require_once(LIB_PATH_INC.DS."config.php");
+require_once(LIB_PATH_INC."config.php");
 
 class MySqli_DB {
 

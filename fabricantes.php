@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Todos os fabricantes';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Todos os fabricantes';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -45,7 +46,7 @@ if(isset($_POST['add_manufacturer'])){
       <div class="panel-body">
         <form method="post" action="fabricantes.php">
           <div class="form-group">
-            <input type="text" class="form-control" name="manufacturer-name" placeholder="Nome do fabricante" required>
+            <input type="text" class="form-control" name="manufacturer-name" placeholder="Nome do fabricante" required autocomplete="off">
           </div>
           <button type="submit" name="add_manufacturer" class="btn btn-primary">Novo fabricante</button>
         </form>

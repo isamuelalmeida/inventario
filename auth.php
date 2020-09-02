@@ -1,4 +1,5 @@
-<?php ob_start(); include_once('includes/load.php');
+<?php
+require_once('includes/load.php');
 
 $req_fields = array('username','password' );
 validate_fields($req_fields);

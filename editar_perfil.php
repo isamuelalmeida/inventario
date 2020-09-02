@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Editar Perfil';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Editar Perfil';
 page_require_level(2);
 
 //update user image

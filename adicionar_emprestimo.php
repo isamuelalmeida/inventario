@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Adicionar Empréstimo';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Adicionar Empréstimo';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 ?>
@@ -40,7 +41,7 @@ if(isset($_POST['add_loan'])){
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-6">
-    <?php echo display_msg($msg); ?>
+    <?= display_msg($msg); ?>
     <form method="post" action="ajax.php" autocomplete="off" id="sug-form">
       <div class="form-group">
         <div class="input-group">
@@ -61,8 +62,11 @@ if(isset($_POST['add_loan'])){
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Equipamento a ser emprestado</span>
+          <span>Listar empréstimos</span>
         </strong>
+        <div class="pull-right">
+          <a href="emprestimos.php" class="btn btn-danger">Listar empréstimos</a>
+        </div>
       </div>
       <div class="panel-body">
         <form method="post" action="adicionar_emprestimo.php">

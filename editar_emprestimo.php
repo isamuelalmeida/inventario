@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Editar Empréstimo';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Editar Empréstimo';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 
@@ -29,10 +30,10 @@ if(isset($_POST['update_loan'])){
     $sql .= " WHERE id ='{$loan['id']}'";
     $result = $db->query($sql);
     if( $result && $db->affected_rows() === 1){
-      $session->msg('s',"Empréstimo alterado com sucesso!");
+      $session->msg('s','Empréstimo de tombo '. $equipment['tombo'] .' foi alterado com sucesso!');
       redirect('emprestimos.php?id='.$loan['id'], false);
     } else {
-      $session->msg('d','Desculpe, falha ao alterar o equipamento.');
+      $session->msg('d','Desculpe, falha ao alterar o empréstimo.');
       redirect('emprestimos.php', false);
     }
   } else {
@@ -45,20 +46,20 @@ if(isset($_POST['update_loan'])){
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-6">
-    <?php echo display_msg($msg); ?>
+    <?= display_msg($msg); ?>
   </div>
 </div>
 <div class="row">
 
   <div class="col-md-12">
-    <div class="panel">
+    <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
           <span>Todos os Empréstimos</span>
         </strong>
         <div class="pull-right">
-          <a href="emprestimos.php" class="btn btn-primary">Listar empréstimos</a>
+          <a href="emprestimos.php" class="btn btn-danger">Listar empréstimos</a>
         </div>
       </div>
       <div class="panel-body">
@@ -79,7 +80,7 @@ if(isset($_POST['update_loan'])){
                   <div id="result" class="list-group"></div>
                 </td>
                 <td>
-                  <input type="text" class="form-control" name="specifications" value="<?= remove_junk($equipment['specifications']); ?>" required>
+                  <input type="text" class="form-control" name="specifications" value="<?= remove_junk($equipment['specifications']); ?>" readonly>
                 </td>
                 <td>
                   <input type="text" class="form-control" name="responsible_user" value="<?= remove_junk($loan['responsible_user']); ?>" required>
@@ -97,7 +98,7 @@ if(isset($_POST['update_loan'])){
                 <td>
                   <input type="date" class="form-control" name="loan_date" value="<?= remove_junk($loan['loan_date']); ?>" required>
                 </td>
-                <td>
+                <td class="text-center">
                   <button type="submit" name="update_loan" class="btn btn-primary">Atualizar Empréstimo</button>
                 </td>
               </form>

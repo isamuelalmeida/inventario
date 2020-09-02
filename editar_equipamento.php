@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Editar Equipamento';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Editar Equipamento';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -19,6 +20,7 @@ if(isset($_POST['update_equipment'])){
 
   if(empty($errors)){
     $equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
+    $equip_obs  = remove_junk($db->escape($_POST['equipment-obs']));
     $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
     $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
     $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));     
@@ -27,14 +29,15 @@ if(isset($_POST['update_equipment'])){
 
     $query   = "UPDATE equipments SET";
     $query  .=" specifications ='{$equip_specifications}',";
+    $query  .=" obs ='{$equip_obs}',";
     $query  .=" types_equip_id ='{$equip_type_equip}', manufacturer_id ='{$equip_manufacturer}', situation_id='{$equip_situation}', updated_by='{$equip_updated_by}', updated_at='{$equip_updated_at}'";
     $query  .=" WHERE id ='{$equipment['id']}'";
     $result = $db->query($query);
     if($result && $db->affected_rows() === 1){
-      $session->msg('s',"Equipamento alterado com sucesso!");
+      $session->msg('s','Equipamento de tombo '. $equipment['tombo'] .' foi alterado com sucesso!');
       redirect('equipamentos.php', false);
     } else {
-      $session->msg('d','Desculpe, falha ao alterar o equipamento.');
+      $session->msg('d','Desculpe, falha ao alterar o equipamento de tombo '. $equipment['tombo']);
       redirect('editar_equipamento.php?id='.$equipment['id'], false);
     }
 
@@ -49,16 +52,19 @@ if(isset($_POST['update_equipment'])){
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-12">
-    <?php echo display_msg($msg); ?>
+    <?= display_msg($msg); ?>
   </div>
 </div>
 <div class="row">
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading clearfix">
       <strong>
         <span class="glyphicon glyphicon-th"></span>
         <span>Adicionar Novo Equipamento</span>
       </strong>
+      <div class="pull-right">
+        <a href="equipamentos.php" class="btn btn-danger">Listar equipamentos</a>
+      </div>
     </div>
     <div class="panel-body">
       <div class="col-md-12">
@@ -133,7 +139,6 @@ if(isset($_POST['update_equipment'])){
           </div>             
 
           <button type="submit" name="update_equipment" class="btn btn-primary">Atualizar equipamento</button>
-          <a href="equipamentos.php" class="btn btn-danger">Cancelar</a>
         </form>
       </div>
     </div>

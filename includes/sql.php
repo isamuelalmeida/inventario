@@ -1,5 +1,4 @@
 <?php
-require_once('includes/load.php');
 
 /*--------------------------------------------------------------*/
 /* Function for find all database table rows by table name
@@ -185,10 +184,9 @@ function page_require_level($require_level){
 }
 
 /*--------------------------------------------------------------*/
-/* Function for Finding all equipment name
-/* JOIN with types_equips, manufacturers and situations database table
+/* Function for find all equipments
 /*--------------------------------------------------------------*/
-function join_equipment_table(){
+function find_all_equipment(){
   global $db;
   $sql  =" SELECT e.id, e.tombo, e.specifications, e.obs, t_e.name AS type_equip,";
   $sql  .=" m.name AS manufacturer, sit.name AS situation";
@@ -196,7 +194,7 @@ function join_equipment_table(){
   $sql  .=" INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
   $sql  .=" INNER JOIN manufacturers m ON m.id = e.manufacturer_id";
   $sql  .=" INNER JOIN situations sit ON sit.id = e.situation_id";
-  $sql  .=" ORDER BY e.id ASC";
+  $sql  .=" ORDER BY e.id DESC";
   return find_by_sql($sql);
 
 }

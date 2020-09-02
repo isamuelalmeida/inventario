@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Dashboard';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Dashboard';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 

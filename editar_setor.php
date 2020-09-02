@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Editar setor';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Editar setor';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -49,7 +50,7 @@ if(isset($_POST['edit_sector'])){
       <div class="panel-body">
         <form method="post" action="editar_setor.php?id=<?= (int)$sector['id'];?>">
           <div class="form-group">
-            <input type="text" class="form-control" name="sector-name" required value="<?= remove_junk(ucfirst($sector['name']));?>">
+            <input type="text" class="form-control" name="sector-name" required autocomplete="off" value="<?= remove_junk(ucfirst($sector['name']));?>">
           </div>
           <button type="submit" name="edit_sector" class="btn btn-primary">Atualizar setor</button>
         </form>

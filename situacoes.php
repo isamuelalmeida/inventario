@@ -1,6 +1,7 @@
-<?php ob_start();
-$page_title = 'Todas as situações';
+<?php
 require_once('includes/load.php');
+
+$page_title = 'Todas as situações';
 // Checkin What level user has permission to view this page
 page_require_level(1);
 
@@ -46,7 +47,7 @@ if(isset($_POST['add_situation'])){
       <div class="panel-body">
         <form method="post" action="situacoes.php">
           <div class="form-group">
-            <input type="text" class="form-control" name="situation-name" placeholder="Nome da situação" required>
+            <input type="text" class="form-control" name="situation-name" placeholder="Nome da situação" required autocomplete="off">
           </div>
           <button type="submit" name="add_situation" class="btn btn-primary">Nova situação</button>
         </form>
