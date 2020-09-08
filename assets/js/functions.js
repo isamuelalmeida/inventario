@@ -80,78 +80,93 @@ $(document).ready(function() {
     // Datatables for Normal Tables
     if($('.datatable-active').length)
     $('.datatable-active').DataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "pageLength": 10,
-        "lengthMenu": [ [12, 24, 36, -1], [12, 24, 36, "All"] ],
-        "oLanguage": {
-            "sLengthMenu": "",
+        bJQueryUI: true,
+        sPaginationType: "full_numbers",
+        pageLength: 10,
+        lengthMenu: [ [12, 24, 36, -1], [12, 24, 36, "All"] ],
+        oLanguage: {
+            sLengthMenu: "",
             //"sLengthMenu": "Mostrar _MENU_ registros por página",
-            "sZeroRecords": "Nenhum registro encontrado",
-            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-            "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
-            "sInfoFiltered": "(filtrado de _MAX_ registros)",
-            "sSearch": "Pesquisar",
-            "oPaginate": {
-                "sFirst": "Início",
-                "sPrevious": "Anterior",
-                "sNext": "Próximo",
-                "sLast": "Último"
-            }
-        },        
-        "aaSorting": [[0, 'asc']],
-        "aoColumnDefs": [
-            {"orderable": false}
-
-        ]
-    });
-
-  // Datatables for Tables with Buttons
-    if($('.datatable-button-active').length)
-    $('.datatable-button-active').DataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "pageLength": 10,
-        "lengthMenu": [ [12, 24, 36, -1], [12, 24, 36, "All"] ],
-        "oLanguage": {
-            "sLengthMenu": "",
-            //"sLengthMenu": "Mostrar _MENU_ registros por página",
-            "sZeroRecords": "Nenhum registro encontrado",
-            "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-            "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
-            "sInfoFiltered": "(filtrado de _MAX_ registros)",
-            "sSearch": "Pesquisar",
-            "oPaginate": {
-                "sFirst": "Início",
-                "sPrevious": "Anterior",
-                "sNext": "Próximo",
-                "sLast": "Último"
+            sZeroRecords: "Nenhum registro encontrado",
+            sInfo: "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+            sInfoEmpty: "Mostrando 0 / 0 de 0 registros",
+            sInfoFiltered: "(filtrado de _MAX_ registros)",
+            sSearch: "Pesquisar",
+            oPaginate: {
+                sFirst: "Início",
+                sPrevious: "Anterior",
+                sNext: "Próximo",
+                sLast: "Último"
             }
         },
-        "responsive": true,
-        "dom": '<"html5buttons"B>lTfgitp',
-        "buttons": [
-            {"extend": 'copy'},
-            {"extend": 'csv'},
-            {"extend": 'excel', "title": 'Relatórios de Equipamentos'},
-            {"extend": 'pdf', "title": 'Relatórios de Equipamentos'},
-        {"extend": 'print',
-             customize: function (win){
-                    $(win.document.body).addClass('white-bg');
-                    $(win.document.body).css('font-size', '10px');
-
-                    $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-            }
-            }
-        ],
-        "aaSorting": [[0, 'asc']],
-        "aoColumnDefs": [
-            {"orderable": false}
+        responsive: true,        
+        aaSorting: [[0, 'asc']],
+        aoColumnDefs: [
+            {orderable: false}
 
         ]
     });
+    
+    if($('.datatable-button-active').length)
+    $('.datatable-button-active').DataTable({
+        bJQueryUI: true,
+        sPaginationType: "full_numbers",
+        pageLength: 10,
+        lengthMenu: [ [12, 24, 36, -1], [12, 24, 36, "All"] ],
+        oLanguage: {
+            sLengthMenu: "",
+            //"sLengthMenu": "Mostrar _MENU_ registros por página",
+            sZeroRecords: "Nenhum registro encontrado",
+            sInfo: "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+            sInfoEmpty: "Mostrando 0 / 0 de 0 registros",
+            sInfoFiltered: "(filtrado de _MAX_ registros)",
+            sSearch: "Pesquisar",
+            oPaginate: {
+                sFirst: "Início",
+                sPrevious: "Anterior",
+                sNext: "Próximo",
+                sLast: "Último"
+            }
+        },
+        responsive: true,        
+        dom: 'Bfrtip',        
+        buttons: [            
+            {
+                extend: 'copyHtml5',                
+                exportOptions: {
+                    columns: ':visible'
+                },
+                text: 'Copiar'
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',                
+                exportOptions: {
+                    columns: ':visible'
+                },
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                text: 'Imprimir'
+            },
+            {
+                extend: 'colvis',
+                text: 'Visibilidade das Colunas'
+            }
+
+        ]
+    });
+    
 
 });
 

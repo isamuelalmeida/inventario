@@ -11,14 +11,6 @@ body{
   text-decoration: none;
 }.padding-top{
   padding-top: 20px;
-}.login-page{
-  width: 350px;
-  margin: 7% auto;
-  padding: 0 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #f2f2f2;
-}.login-page .text-center{
-  margin-bottom: 10px;
 }.box{
   padding: 20px;
   background-color: #f9f9f9;
@@ -29,6 +21,12 @@ body{
   top: 50px;
   left: 0;
   padding: 35px 15px 20px 270px;
+}
+
+.m-t-25 {
+  margin-top: 25px;
+}.m-b-15 {
+  margin-bottom: 15px;
 }
 
 .bg-green{

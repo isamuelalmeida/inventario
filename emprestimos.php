@@ -31,12 +31,16 @@ $loans = find_all_loan();
             <tr>
               <th class="text-center" style="width: 50px;">#</th>                
               <th> Tombo</th>
-              <th> Especificações </th>
-              <th class="text-center" style="width: 10%;"> Tipo de Equipamento </th>
-              <th class="text-center" style="width: 10%;"> Setor </th>
-              <th class="text-center" style="width: 10%;"> Usuário Responsável </th>
-              <th class="text-center" style="width: 10%;"> Data do empréstimo </th>
-              <th class="text-center" style="width: 100px;"> Ações </th>
+              <th class="none"> Especificações </th>
+              <th class="text-center"> Tipo de Equipamento </th>
+              <th class="text-center"> Setor </th>
+              <th class="text-center"> Usuário Responsável </th>
+              <th class="text-center"> Data do empréstimo </th>
+              <th class="text-center none"> Criado por </th>
+              <th class="text-center none"> Criado em </th>
+              <th class="text-center none"> Atualizado por </th>
+              <th class="text-center none"> Atualizado em </th>
+              <th class="text-center"> Ações </th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +52,11 @@ $loans = find_all_loan();
                 <td class="text-center"><?= remove_junk($loan['type_equip']); ?></td>                
                 <td class="text-center"><?= remove_junk($loan['sector']); ?></td>                
                 <td class="text-center"><?= remove_junk($loan['responsible_user']); ?></td>                
-                <td class="text-center"><?= strftime('%d/%m/%Y', strtotime($loan['loan_date'])); ?></td>                
+                <td class="text-center"><?= strftime('%d/%m/%Y', strtotime($loan['loan_date'])); ?></td>
+                <td><?= remove_junk($loan['created_user']); ?></td>       
+                <td class="text-center"><?= strftime('%d/%m/%Y %H:%M', strtotime($loan['created_at'])); ?></td>                
+                <td><?= remove_junk($loan['updated_user']); ?></td>
+                <td class="text-center"><?php if(!empty($loan['updated_at'])) echo strftime('%d/%m/%Y %H:%M', strtotime($loan['updated_at'])); ?></td>                
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="editar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-xs btn-warning"  title="Editar" data-toggle="tooltip">

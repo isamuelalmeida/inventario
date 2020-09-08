@@ -189,11 +189,14 @@ function page_require_level($require_level){
 function find_all_equipment(){
   global $db;
   $sql  =" SELECT e.id, e.tombo, e.specifications, e.obs, t_e.name AS type_equip,";
-  $sql  .=" m.name AS manufacturer, sit.name AS situation";
+  $sql  .=" m.name AS manufacturer, sit.name AS situation,";
+  $sql  .=" e.created_at, u_c.name AS created_user, u_u.name AS updated_user, e.updated_at";
   $sql  .=" FROM equipments e";
   $sql  .=" INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
   $sql  .=" INNER JOIN manufacturers m ON m.id = e.manufacturer_id";
   $sql  .=" INNER JOIN situations sit ON sit.id = e.situation_id";
+  $sql  .=" INNER JOIN users u_c ON u_c.id = e.created_by";
+  $sql  .=" LEFT JOIN users u_u ON u_u.id = e.updated_by";
   $sql  .=" ORDER BY e.id DESC";
   return find_by_sql($sql);
 
@@ -257,11 +260,14 @@ function find_recent_equipment_added($limit){
 /*--------------------------------------------------------------*/
 function find_all_loan(){
   global $db;
-  $sql  = "SELECT l.id,l.responsible_user,l.loan_date,e.tombo,e.specifications,s.name AS sector,t_e.name AS type_equip";
+  $sql  = "SELECT l.id,l.responsible_user,l.loan_date,e.tombo,e.specifications,s.name AS sector,t_e.name AS type_equip,";
+  $sql  .=" l.created_at, u_c.name AS created_user, u_u.name AS updated_user, l.updated_at";
   $sql .= " FROM loans l";
   $sql .= " INNER JOIN equipments e ON e.id = l.equipment_id";
   $sql .= " INNER JOIN sectors s ON s.id = l.sector_id";
   $sql .= " INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
+  $sql  .=" INNER JOIN users u_c ON u_c.id = l.created_by";
+  $sql  .=" LEFT JOIN users u_u ON u_u.id = l.updated_by";
   $sql .= " ORDER BY l.created_at DESC";   
   return find_by_sql($sql);
 }
@@ -300,22 +306,25 @@ function find_all_loan_history(){
 /*--------------------------------------------------------------*/
 function issue_reports($tombo, $specifications, $responsible_user, $loan, $type_equip, $sector, $manufacturer, $situation){
   global $db;
-  $sql  = "SELECT e.tombo,e.specifications,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
+  $sql  = "SELECT e.tombo,e.specifications,e.obs,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
   LEFT JOIN loans l ON l.equipment_id = e.id 
   LEFT JOIN sectors s ON s.id = l.sector_id 
   INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
   INNER JOIN situations sit ON sit.id = e.situation_id 
   INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id WHERE e.id ";
 
+  // Search for equipments in the category of "Somente Emprestados"
   if($loan === "2"){
-    $sql  = "SELECT e.tombo,e.specifications,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
+    $sql  = "SELECT e.tombo,e.specifications,e.obs,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
     INNER JOIN loans l ON l.equipment_id = e.id 
     INNER JOIN sectors s ON s.id = l.sector_id 
     INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
     INNER JOIN situations sit ON sit.id = e.situation_id 
     INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id WHERE e.id ";
+
+  // Search for equipments in the category of "Somente não Emprestados"
   } elseif($loan === "3") {
-    $sql  = "SELECT e.tombo,e.specifications,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
+    $sql  = "SELECT e.tombo,e.specifications,e.obs,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
     INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
     INNER JOIN situations sit ON sit.id = e.situation_id 
     INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id 
@@ -326,9 +335,9 @@ function issue_reports($tombo, $specifications, $responsible_user, $loan, $type_
   if(!empty($specifications)) $sql .= " AND e.specifications LIKE '%$specifications%'";
   if(!empty($responsible_user) && $loan !== "3") $sql .= " AND l.responsible_user LIKE '%$responsible_user%'";
   if(!empty($type_equip)) $sql .= " AND e.types_equip_id = '$type_equip'";
-  if(!empty($sector) && $loan !== "3") $sql .= " AND l.sector_id = '$sector'";
+  if(!empty($sector) && $loan !== "3") $sql .= " AND l.sector_id = $sector";
   if(!empty($manufacturer)) $sql .= " AND e.manufacturer_id = '$manufacturer'";
-  if(!empty($situation)) $sql .= " AND e.situation_id = '$situation'";  
+  if(!empty($situation)) $sql .= " AND e.situation_id = '$situation'";
 
   return find_by_sql($sql);
 }

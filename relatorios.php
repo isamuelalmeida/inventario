@@ -23,6 +23,7 @@ if(isset($_POST['submit'])):
 
   $all_equips = issue_reports($equip_tombo, $equip_specifications, $equip_responsible_user, $equip_loan, $equip_type_equip, $equip_sector, $equip_manufacturer, $equip_situation);
 
+
 endif;
 
 ?>
@@ -93,10 +94,9 @@ endif;
                 <select id="sector" class="form-control" name="equipment-sector">
                   <option value="">Setor</option>
                   <?php  foreach ($all_sector as $sector): ?>
-                  <?php if(strtoupper($sector['name']) != strtoupper("suinfor")): ?>
                   <option value="<?= (int)$sector['id'] ?>">
                   <?= $sector['name'] ?></option>
-                  <?php endif; endforeach; ?>
+                  <?php endforeach; ?>
                 </select>
               </div>
             </div>
@@ -123,7 +123,7 @@ endif;
                 </select>
               </div>
             </div>
-          </div>
+          </div>          
 
           <div class="form-group">
             <button type="submit" name="submit" class="btn btn-primary">Gerar Relatório</button>
@@ -143,25 +143,29 @@ endif;
           <tr class="info">
             <th>#</th>             
             <th>Tombo</th>
-            <th style="width: 20%;">Tipo de Equipamento</th>
+            <th>Tipo de Equipamento</th>
             <th>Especificações</th>
             <th>Usuário Responsável</th>              
             <th>Setor</th>
             <th>Fabricante</th>
             <th>Situação</th>
+            <th>Observação</th>
+            <th>Emprestado</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach($all_equips as $result): ?>
             <tr>
-              <td>#<?= count_id(); ?></td>              
+              <td><?= count_id(); ?></td>              
               <td><?= remove_junk($result['tombo']);?></td>
               <td><?= remove_junk($result['types_equip']);?></td>              
               <td><?= remove_junk($result['specifications']);?></td>              
               <td><?php if(empty($result['responsible_user'])): echo "SUINFOR"; else: echo remove_junk($result['responsible_user']); endif;?></td>
-              <td><?php if(empty($result['sector'])): echo "SUINFOR"; else: echo remove_junk($result['sector']); endif;?></td>
+              <td><?php if(empty($result['sector'])): echo "SEM SETOR"; else: echo remove_junk($result['sector']); endif;?></td>
               <td><?= remove_junk($result['manufacturer']);?></td>
               <td><?= remove_junk($result['situation']);?></td>
+              <td><?= remove_junk($result['obs']);?></td>
+              <td><?php if(empty($result['sector'])): echo "Não"; else: echo "Sim"; endif;?></td>
             </tr>
           <?php endforeach; ?>        
         </tbody>
@@ -181,11 +185,12 @@ endif;
 ?>
 
 <?php
-$scripts = "
-$('#loans').change(function(){
-  if($('#loans').val() == 3) $('#sector').hide();
-  else $('#sector').show();
-});
+$scripts .= "
+	$('#sector').hide();
+	$('#loans').change(function(){
+	  if($('#loans').val() == 2) $('#sector').show();
+	  else $('#sector').hide();
+	});
 "
 ?>
 

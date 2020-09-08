@@ -27,13 +27,18 @@ $equipments = find_all_equipment();
         <table class="table table-bordered datatable-active">
           <thead>
             <tr>
-              <th class="text-center" style="width: 50px;">#</th>                
-              <th> Tombo</th>
-              <th> Especificações </th>
-              <th class="text-center" style="width: 10%;"> Tipo de equipamento </th>
-              <th class="text-center" style="width: 10%;"> Fabricante </th>
-              <th class="text-center" style="width: 10%;"> Situação </th>
-              <th class="text-center" style="width: 100px;"> Ações </th>
+              <th class="text-center">#</th>                
+              <th class="text-center"> Tombo</th>
+              <th class="text-center"> Especificações </th>
+              <th class="text-center"> Tipo de equipamento </th>
+              <th class="text-center none"> Fabricante </th>
+              <th class="text-center none"> Situação </th>
+              <th class="text-center none"> Observação </th>              
+              <th class="text-center none"> Criado por </th>
+              <th class="text-center none"> Criado em </th>
+              <th class="text-center none"> Atualizado por </th>
+              <th class="text-center none"> Atualizado em </th>
+              <th class="text-center"> Ações </th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +50,11 @@ $equipments = find_all_equipment();
                 <td class="text-center"><?= remove_junk($equipment['type_equip']); ?></td>                
                 <td class="text-center"><?= remove_junk($equipment['manufacturer']); ?></td>                
                 <td class="text-center"><?= remove_junk($equipment['situation']); ?></td>                
+                <td><?= remove_junk($equipment['obs']); ?></td>
+                <td><?= remove_junk($equipment['created_user']); ?></td>       
+                <td class="text-center"><?= strftime('%d/%m/%Y %H:%M', strtotime($equipment['created_at'])); ?></td>                
+                <td><?= remove_junk($equipment['updated_user']); ?></td>
+                <td class="text-center"><?php if(!empty($equipment['updated_at'])) echo strftime('%d/%m/%Y %H:%M', strtotime($equipment['updated_at'])); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="editar_equipamento.php?id=<?= (int)$equipment['id'];?>" class="btn btn-xs btn-warning"  title="Editar" data-toggle="tooltip">
