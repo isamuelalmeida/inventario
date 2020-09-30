@@ -35,6 +35,7 @@ CREATE TABLE `equipments` (
   `types_equip_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,
   `situation_id` int(11) NOT NULL,
+  `warranty` date DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -128,10 +129,10 @@ CREATE TABLE `sectors` (
 --
 
 INSERT INTO `sectors` (`id`, `name`) VALUES
-(4, 'ASPLAE'),
+(4, 'LOGÍSTICA'),
 (3, 'RH'),
-(2, 'SEATRAN'),
-(1, 'SUINFOR');
+(2, 'MARKET'),
+(1, 'INFORMÁTICA');
 
 -- --------------------------------------------------------
 
@@ -149,9 +150,9 @@ CREATE TABLE `situations` (
 --
 
 INSERT INTO `situations` (`id`, `name`) VALUES
-(4, 'Funcional mas com defeito'),
+(4, 'Inservível'),
 (3, 'Furtado'),
-(2, 'Não Operacional'),
+(2, 'Parado'),
 (1, 'Operacional');
 
 -- --------------------------------------------------------

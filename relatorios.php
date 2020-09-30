@@ -150,7 +150,8 @@ endif;
             <th>Fabricante</th>
             <th>Situação</th>
             <th>Observação</th>
-            <th>Emprestado</th>
+            <th class="none">Término da Garantia</th>
+            <th class="none">Emprestado</th>
           </tr>
         </thead>
         <tbody>
@@ -160,11 +161,12 @@ endif;
               <td><?= remove_junk($result['tombo']);?></td>
               <td><?= remove_junk($result['types_equip']);?></td>              
               <td><?= remove_junk($result['specifications']);?></td>              
-              <td><?php if(empty($result['responsible_user'])): echo "SUINFOR"; else: echo remove_junk($result['responsible_user']); endif;?></td>
-              <td><?php if(empty($result['sector'])): echo "SEM SETOR"; else: echo remove_junk($result['sector']); endif;?></td>
+              <td><?php if(is_null($result['responsible_user'])): echo "SUINFOR"; else: echo remove_junk($result['responsible_user']); endif; ?></td>
+              <td><?php if(is_null($result['sector'])): echo "SEM SETOR"; else: echo remove_junk($result['sector']); endif; ?></td>
               <td><?= remove_junk($result['manufacturer']);?></td>
               <td><?= remove_junk($result['situation']);?></td>
               <td><?= remove_junk($result['obs']);?></td>
+              <td><?php if(is_null($result['warranty'])): echo "Sem Garantia"; else: echo strftime('%d/%m/%Y', strtotime($result['warranty'])); endif; ?></td>
               <td><?php if(empty($result['sector'])): echo "Não"; else: echo "Sim"; endif;?></td>
             </tr>
           <?php endforeach; ?>        

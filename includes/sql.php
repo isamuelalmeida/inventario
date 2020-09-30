@@ -188,7 +188,7 @@ function page_require_level($require_level){
 /*--------------------------------------------------------------*/
 function find_all_equipment(){
   global $db;
-  $sql  =" SELECT e.id, e.tombo, e.specifications, e.obs, t_e.name AS type_equip,";
+  $sql  =" SELECT e.id, e.tombo, e.specifications, e.obs, e.warranty, t_e.name AS type_equip,";
   $sql  .=" m.name AS manufacturer, sit.name AS situation,";
   $sql  .=" e.created_at, u_c.name AS created_user, u_u.name AS updated_user, e.updated_at";
   $sql  .=" FROM equipments e";
@@ -281,7 +281,7 @@ function find_recent_loan_added($limit){
   $sql .= " FROM loans l";
   $sql .= " INNER JOIN equipments e ON e.id = l.equipment_id";
   $sql  .=" INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
-  $sql .= " ORDER BY e.created_at DESC LIMIT ".$db->escape((int)$limit);
+  $sql .= " ORDER BY l.created_at DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
 
@@ -306,28 +306,28 @@ function find_all_loan_history(){
 /*--------------------------------------------------------------*/
 function issue_reports($tombo, $specifications, $responsible_user, $loan, $type_equip, $sector, $manufacturer, $situation){
   global $db;
-  $sql  = "SELECT e.tombo,e.specifications,e.obs,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
+  $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
   LEFT JOIN loans l ON l.equipment_id = e.id 
   LEFT JOIN sectors s ON s.id = l.sector_id 
   INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
   INNER JOIN situations sit ON sit.id = e.situation_id 
-  INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id WHERE e.id ";
+  INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id WHERE e.id ";
 
   // Search for equipments in the category of "Somente Emprestados"
   if($loan === "2"){
-    $sql  = "SELECT e.tombo,e.specifications,e.obs,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
+    $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
     INNER JOIN loans l ON l.equipment_id = e.id 
     INNER JOIN sectors s ON s.id = l.sector_id 
     INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
     INNER JOIN situations sit ON sit.id = e.situation_id 
-    INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id WHERE e.id ";
+    INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id WHERE e.id ";
 
   // Search for equipments in the category of "Somente não Emprestados"
   } elseif($loan === "3") {
-    $sql  = "SELECT e.tombo,e.specifications,e.obs,m.name AS manufacturer,sit.name AS situation,t_h.name AS types_equip FROM equipments e 
+    $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
     INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
     INNER JOIN situations sit ON sit.id = e.situation_id 
-    INNER JOIN types_equips t_h ON t_h.id = e.types_equip_id 
+    INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id 
     WHERE e.id NOT IN (SELECT equipment_id FROM loans) ";
   }
 
@@ -346,7 +346,7 @@ function issue_reports($tombo, $specifications, $responsible_user, $loan, $type_
 /*--------------------------------------------------------------*/
 /* Create pie Chart for Dashboard with Types Equipments
 /*--------------------------------------------------------------*/
-function pieChartTypesEquip(){
+function pieChartEquipmentPerTyperEquip(){
   global $db;
   $sql = "SELECT COUNT(e.types_equip_id) AS count, t_e.name FROM equipments e INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id GROUP BY e.types_equip_id";
   return find_by_sql($sql);
@@ -361,6 +361,23 @@ function barChartLoanPerSector(){
   return find_by_sql($sql);
 }
 
+/*--------------------------------------------------------------*/
+/* Create horizontal bar Chart for Dashboard with Equipments
+   per Manufacturer
+/*--------------------------------------------------------------*/
+function horizontalBarChartEquipmentPerManufacturer(){
+  global $db;
+  $sql = "SELECT COUNT(e.manufacturer_id) AS count, m.name FROM equipments e INNER JOIN manufacturers m ON m.id = e.manufacturer_id GROUP BY e.manufacturer_id";
+  return find_by_sql($sql);
+}
 
+/*--------------------------------------------------------------*/
+/* Create pie Chart for Dashboard with Types Equipments
+/*--------------------------------------------------------------*/
+function pieChartEquipmentPerSituation(){
+  global $db;
+  $sql = "SELECT COUNT(e.situation_id) AS count,s.name FROM equipments e INNER JOIN situations s ON s.id = e.situation_id GROUP BY e.situation_id";
+  return find_by_sql($sql);
+}
 
 ?>

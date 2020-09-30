@@ -30,10 +30,11 @@ $equipments = find_all_equipment();
               <th class="text-center">#</th>                
               <th class="text-center"> Tombo</th>
               <th class="text-center"> Especificações </th>
-              <th class="text-center"> Tipo de equipamento </th>
+              <th class="text-center"> Tipo de Equipamento </th>
               <th class="text-center none"> Fabricante </th>
               <th class="text-center none"> Situação </th>
-              <th class="text-center none"> Observação </th>              
+              <th class="text-center none"> Observação </th>
+              <th class="text-center none"> Término da Garantia </th>
               <th class="text-center none"> Criado por </th>
               <th class="text-center none"> Criado em </th>
               <th class="text-center none"> Atualizado por </th>
@@ -51,6 +52,12 @@ $equipments = find_all_equipment();
                 <td class="text-center"><?= remove_junk($equipment['manufacturer']); ?></td>                
                 <td class="text-center"><?= remove_junk($equipment['situation']); ?></td>                
                 <td><?= remove_junk($equipment['obs']); ?></td>
+                <td class="text-center">
+                  <?php
+                    if(!is_null($equipment['warranty'])) echo strftime('%d/%m/%Y', strtotime($equipment['warranty']));
+                    else echo "Sem garantia";
+                  ?>                    
+                </td>
                 <td><?= remove_junk($equipment['created_user']); ?></td>       
                 <td class="text-center"><?= strftime('%d/%m/%Y %H:%M', strtotime($equipment['created_at'])); ?></td>                
                 <td><?= remove_junk($equipment['updated_user']); ?></td>

@@ -17,9 +17,9 @@ if(isset($_POST['add_equipment'])){
 		$equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
 		$equip_obs  = remove_junk($db->escape($_POST['equipment-obs']));
 		$equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
-
 		$equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
-		$equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));     
+		$equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));
+		$equip_warranty  = remove_junk($db->escape($_POST['equipment-warranty']));
 		$equip_created_by    = (int) $_SESSION['user_id'];
 		$equip_created_at    = make_date();
 
@@ -29,9 +29,9 @@ if(isset($_POST['add_equipment'])){
 		}
 
 		$query  = "INSERT INTO equipments (";
-		$query .=" tombo,specifications,obs,types_equip_id,manufacturer_id,situation_id,created_by,created_at";
+		$query .=" tombo, specifications, obs, types_equip_id, manufacturer_id, situation_id, warranty, created_by, created_at";
 		$query .=") VALUES (";
-		$query .=" '{$equip_tombo}', '{$equip_specifications}', '{$equip_obs}', '{$equip_type_equip}', '{$equip_manufacturer}', '{$equip_situation}', '{$equip_created_by}','{$equip_created_at}'";
+		$query .=" '{$equip_tombo}', '{$equip_specifications}', '{$equip_obs}', '{$equip_type_equip}', '{$equip_manufacturer}', '{$equip_situation}', '{$equip_warranty}', '{$equip_created_by}','{$equip_created_at}'";
 		$query .=")";
 
 		if($db->query($query)){
@@ -133,9 +133,20 @@ if(isset($_POST['add_equipment'])){
 										<?= $sit['name'] ?></option>
 										<?php endforeach; ?>
 									</select>
+								</div>								
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3">
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-calendar"></i> <b>Término da Garantia</b>
+									</span>
+									<input type="date" class="form-control" name="equipment-warranty">
 								</div>
 							</div>
-						</div>             
+						</div>
 
 						<button type="submit" name="add_equipment" class="btn btn-primary">Adicionar equipamento</button>
 					</form>

@@ -24,12 +24,14 @@ if(isset($_POST['update_equipment'])){
     $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
     $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
     $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));     
+    $equip_warranty  = remove_junk($db->escape($_POST['equipment-warranty']));     
     $equip_updated_by    = (int) $_SESSION['user_id'];
     $equip_updated_at    = make_date();
 
     $query   = "UPDATE equipments SET";
     $query  .=" specifications ='{$equip_specifications}',";
     $query  .=" obs ='{$equip_obs}',";
+    $query  .=" warranty ='{$equip_warranty}',";
     $query  .=" types_equip_id ='{$equip_type_equip}', manufacturer_id ='{$equip_manufacturer}', situation_id='{$equip_situation}', updated_by='{$equip_updated_by}', updated_at='{$equip_updated_at}'";
     $query  .=" WHERE id ='{$equipment['id']}'";
     $result = $db->query($query);
@@ -134,9 +136,20 @@ if(isset($_POST['update_equipment'])){
                   <option value="<?= (int)$sit['id'] ?>"><?= $sit['name'] ?></option>
                   <?php endif; endforeach; ?>
                 </select>
+              </div>              
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-3">
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-calendar"></i> <b>Término da Garantia</b>
+                </span>
+                <input type="date" class="form-control" name="equipment-warranty" value="<?= $equipment['warranty'] ?>">
               </div>
             </div>
-          </div>             
+          </div>
 
           <button type="submit" name="update_equipment" class="btn btn-primary">Atualizar equipamento</button>
         </form>

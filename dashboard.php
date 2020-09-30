@@ -10,12 +10,13 @@ $c_loan       = count_by_id('loans');
 $c_sector          = count_by_id('sectors');
 $c_user          = count_by_id('users');
 
-$pieChartTypesEquip = pieChartTypesEquip();
+$pieChartEquipmentPerTyperEquip = pieChartEquipmentPerTyperEquip();
 $barChartLoansPerSector = barChartLoanPerSector();
+$horizontalBarChartEquipmentPerManufacturer = horizontalBarChartEquipmentPerManufacturer();
+$pieChartEquipmentPerSituation = pieChartEquipmentPerSituation();
 
 $recent_equipments    = find_recent_equipment_added('5');
 $recent_loans    = find_recent_loan_added('5');
-
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -82,6 +83,17 @@ $recent_loans    = find_recent_loan_added('5');
     </div>
     <div class="col-md-5">
       <canvas id="barChart" width="300" height="200"></canvas>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row" style="background-color:white">
+  <div>
+    <div class="col-md-5">
+      <canvas id="horizontalBar" width="300" height="200"></canvas>
+    </div>
+    <div class="col-md-7">
+      <canvas id="doughnutChart" width="500" height="200"></canvas>      
     </div>
   </div>
 </div>
@@ -159,19 +171,19 @@ var myChart = new Chart(ctx, {
   type: 'pie',
   data: {
     labels: [
-    <?php foreach ($pieChartTypesEquip as $count_type_equip): ?>
+    <?php foreach ($pieChartEquipmentPerTyperEquip as $count_type_equip): ?>
       "<?= $count_type_equip['name'] ?>",
     <?php endforeach; ?>
     ],
     datasets: [{
       label: 'Tipo de Equipamento',
       data: [
-      <?php foreach ($pieChartTypesEquip as $count_type_equip): ?>
+      <?php foreach ($pieChartEquipmentPerTyperEquip as $count_type_equip): ?>
         "<?= $count_type_equip['count'] ?>",
       <?php endforeach; ?>
       ],              
       backgroundColor: [
-      <?php foreach ($pieChartTypesEquip as $count_type_equip):
+      <?php foreach ($pieChartEquipmentPerTyperEquip as $count_type_equip):
         $rand1 = mt_rand(0, 255); $rand2 = mt_rand(0, 255); $rand3 = mt_rand(0, 255); ?>
         '<?= "rgba($rand1, $rand2, $rand3)" ?>',
       <?php endforeach; ?>
@@ -181,26 +193,25 @@ var myChart = new Chart(ctx, {
   },
 });
 
-
 // bar chart
 var ctx = document.getElementById('barChart');
 var myChart = new Chart(ctx, {
   type: 'bar',
   data: {
     labels: [
-    <?php foreach ($barChartLoansPerSector as $count_loan_p_sector): ?>
-      "<?= $count_loan_p_sector['name'] ?>",
+    <?php foreach ($barChartLoansPerSector as $count_sector): ?>
+      "<?= $count_sector['name'] ?>",
     <?php endforeach; ?>
     ],
     datasets: [{
       label: 'Empréstimos por Setor',
       data: [
-      <?php foreach ($barChartLoansPerSector as $count_loan_p_sector): ?>
-        "<?= $count_loan_p_sector['count'] ?>",
+      <?php foreach ($barChartLoansPerSector as $count_sector): ?>
+        "<?= $count_sector['count'] ?>",
       <?php endforeach; ?>
       ],
       backgroundColor: [
-      <?php foreach ($barChartLoansPerSector as $count_loan_p_sector):
+      <?php foreach ($barChartLoansPerSector as $count_sector):
         $rand1 = mt_rand(0, 255); $rand2 = mt_rand(0, 255); $rand3 = mt_rand(0, 255); ?>
         '<?= "rgba($rand1, $rand2, $rand3)" ?>',
       <?php endforeach; ?>
@@ -215,6 +226,72 @@ var myChart = new Chart(ctx, {
         }
       }]
     }
+  }
+});
+
+// bar horizontal chart
+new Chart(document.getElementById("horizontalBar"), {
+  type: "horizontalBar",
+  data: {
+    labels: [
+    <?php foreach ($horizontalBarChartEquipmentPerManufacturer as $count_manufacturer): ?>
+      "<?= $count_manufacturer['name'] ?>",
+    <?php endforeach; ?>
+    ],
+    datasets: [{
+      label: "Equipamentos por Fabricante",
+      data: [
+        <?php foreach ($horizontalBarChartEquipmentPerManufacturer as $count_manufacturer): ?>
+          "<?= $count_manufacturer['count'] ?>",
+        <?php endforeach; ?>
+      ],
+      fill: false,
+      backgroundColor: [
+        <?php foreach ($horizontalBarChartEquipmentPerManufacturer as $count_manufacturer):
+          $rand1 = mt_rand(0, 255); $rand2 = mt_rand(0, 255); $rand3 = mt_rand(0, 255); ?>
+          '<?= "rgba($rand1, $rand2, $rand3)" ?>',
+        <?php endforeach; ?>      
+    ],
+      "borderWidth": 1
+    }]
+  },
+    "options": {
+      "scales": {
+      "xAxes": [{
+        "ticks": {
+          "beginAtZero": true
+        }
+      }]
+    }
+  }
+});
+
+// doughnut chart
+var ctxD = document.getElementById("doughnutChart").getContext('2d');
+var myLineChart = new Chart(ctxD, {
+  type: 'doughnut',
+  data: {
+    labels: [
+    <?php foreach ($pieChartEquipmentPerSituation as $count_situation): ?>
+      "<?= $count_situation['name'] ?>",
+    <?php endforeach; ?>
+    ],
+    datasets: [{
+      data: [
+      <?php foreach ($pieChartEquipmentPerSituation as $count_situation): ?>
+        "<?= $count_situation['count'] ?>",
+      <?php endforeach; ?>
+      ],              
+      backgroundColor: [
+      <?php foreach ($pieChartEquipmentPerSituation as $count_situation):
+        $rand1 = mt_rand(0, 255); $rand2 = mt_rand(0, 255); $rand3 = mt_rand(0, 255); ?>
+        '<?= "rgba($rand1, $rand2, $rand3)" ?>',
+      <?php endforeach; ?>
+      ]
+    }]
+  },
+  options: {
+    responsive: true
   }
 });
 </script>
