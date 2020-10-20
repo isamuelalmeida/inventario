@@ -31,7 +31,7 @@ if(isset($_POST['update_equipment'])){
     $query   = "UPDATE equipments SET";
     $query  .=" specifications ='{$equip_specifications}',";
     $query  .=" obs ='{$equip_obs}',";
-    $query  .=" warranty ='{$equip_warranty}',";
+    if(empty($equip_warranty)) $query  .=" warranty = NULL,"; else $query  .=" warranty ='{$equip_warranty}',";
     $query  .=" types_equip_id ='{$equip_type_equip}', manufacturer_id ='{$equip_manufacturer}', situation_id='{$equip_situation}', updated_by='{$equip_updated_by}', updated_at='{$equip_updated_at}'";
     $query  .=" WHERE id ='{$equipment['id']}'";
     $result = $db->query($query);

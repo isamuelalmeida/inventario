@@ -30,8 +30,10 @@ if(isset($_POST['add_equipment'])){
 
 		$query  = "INSERT INTO equipments (";
 		$query .=" tombo, specifications, obs, types_equip_id, manufacturer_id, situation_id, warranty, created_by, created_at";
-		$query .=") VALUES (";
-		$query .=" '{$equip_tombo}', '{$equip_specifications}', '{$equip_obs}', '{$equip_type_equip}', '{$equip_manufacturer}', '{$equip_situation}', '{$equip_warranty}', '{$equip_created_by}','{$equip_created_at}'";
+		$query .=") VALUES (";		
+		$query .=" '{$equip_tombo}', '{$equip_specifications}', '{$equip_obs}', '{$equip_type_equip}', '{$equip_manufacturer}', '{$equip_situation}',";
+		if(empty($equip_warranty)) $query  .=" NULL,"; else $query .=" '{$equip_warranty}',";
+		$query .=" '{$equip_created_by}','{$equip_created_at}'";
 		$query .=")";
 
 		if($db->query($query)){
