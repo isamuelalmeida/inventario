@@ -53,15 +53,15 @@ INSERT INTO `equipments` (`id`, `tombo`, `specifications`, `obs`, `types_equip_i
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `loans`
+-- Estrutura para tabela `transfers`
 --
 
-CREATE TABLE `loans` (
+CREATE TABLE `transfers` (
   `id` int(11) NOT NULL,
   `equipment_id` int(11) NOT NULL,
   `responsible_user` varchar(50) NOT NULL,
   `sector_id` int(11) NOT NULL,
-  `loan_date` date NOT NULL,
+  `transfer_date` date NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -69,24 +69,24 @@ CREATE TABLE `loans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `loans`
+-- Despejando dados para a tabela `transfers`
 --
 
-INSERT INTO `loans` (`id`, `equipment_id`, `responsible_user`, `sector_id`, `loan_date`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
+INSERT INTO `transfers` (`id`, `equipment_id`, `responsible_user`, `sector_id`, `transfer_date`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
 (1, 1, 'Carlos andré', 4, '2020-08-31', 1, '2020-08-31 13:48:09', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `loan_historys`
+-- Estrutura para tabela `transfer_historys`
 --
 
-CREATE TABLE `loan_historys` (
+CREATE TABLE `transfer_historys` (
   `id` int(11) NOT NULL,
   `equipment_id` int(11) NOT NULL,
   `responsible_user` varchar(50) NOT NULL,
   `sector_id` int(11) NOT NULL,
-  `loan_date` date NOT NULL,
+  `transfer_date` date NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -249,23 +249,23 @@ ALTER TABLE `equipments`
   ADD KEY `fk_equipments_updated_user` (`updated_by`);
 
 --
--- Índices de tabela `loans`
+-- Índices de tabela `transfers`
 --
-ALTER TABLE `loans`
+ALTER TABLE `transfers`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_loan_equipment` (`equipment_id`),
-  ADD KEY `fk_loan_sector` (`sector_id`),
-  ADD KEY `fk_loan_created_user` (`created_by`),
-  ADD KEY `fk_loan_updated_user` (`updated_by`);
+  ADD KEY `fk_transfer_equipment` (`equipment_id`),
+  ADD KEY `fk_transfer_sector` (`sector_id`),
+  ADD KEY `fk_transfer_created_user` (`created_by`),
+  ADD KEY `fk_transfer_updated_user` (`updated_by`);
 
 --
--- Índices de tabela `loan_historys`
+-- Índices de tabela `transfer_historys`
 --
-ALTER TABLE `loan_historys`
+ALTER TABLE `transfer_historys`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_loan_historys_equipment` (`equipment_id`),
-  ADD KEY `fk_loan_historys_created_user` (`created_by`),
-  ADD KEY `fk_loan_historys_sector` (`sector_id`);
+  ADD KEY `fk_transfer_historys_equipment` (`equipment_id`),
+  ADD KEY `fk_transfer_historys_created_user` (`created_by`),
+  ADD KEY `fk_transfer_historys_sector` (`sector_id`);
 
 --
 -- Índices de tabela `manufacturers`
@@ -320,15 +320,15 @@ ALTER TABLE `equipments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de tabela `loans`
+-- AUTO_INCREMENT de tabela `transfers`
 --
-ALTER TABLE `loans`
+ALTER TABLE `transfers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `loan_historys`
+-- AUTO_INCREMENT de tabela `transfer_historys`
 --
-ALTER TABLE `loan_historys`
+ALTER TABLE `transfer_historys`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -382,21 +382,21 @@ ALTER TABLE `equipments`
   ADD CONSTRAINT `fk_equipments_updated_user` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --
--- Restrições para tabelas `loans`
+-- Restrições para tabelas `transfers`
 --
-ALTER TABLE `loans`
-  ADD CONSTRAINT `fk_loans_created_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `fk_loans_equipment` FOREIGN KEY (`equipment_id`) REFERENCES `equipments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_loans_sector` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`),
-  ADD CONSTRAINT `fk_loans_updated_user` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+ALTER TABLE `transfers`
+  ADD CONSTRAINT `fk_transfers_created_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_transfers_equipment` FOREIGN KEY (`equipment_id`) REFERENCES `equipments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_transfers_sector` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`),
+  ADD CONSTRAINT `fk_transfers_updated_user` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --
--- Restrições para tabelas `loan_historys`
+-- Restrições para tabelas `transfer_historys`
 --
-ALTER TABLE `loan_historys`
-  ADD CONSTRAINT `fk_loan_historys_created_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `fk_loan_historys_equipment` FOREIGN KEY (`equipment_id`) REFERENCES `equipments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_loan_historys_sector` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`);
+ALTER TABLE `transfer_historys`
+  ADD CONSTRAINT `fk_transfer_historys_created_user` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_transfer_historys_equipment` FOREIGN KEY (`equipment_id`) REFERENCES `equipments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_transfer_historys_sector` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`);
 
 --
 -- Restrições para tabelas `users`

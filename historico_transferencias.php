@@ -1,10 +1,10 @@
 <?php ob_start();
-$page_title = 'Histórico de Empréstimos';
+$page_title = 'Histórico de Transferências';
 require_once('includes/load.php');
 // Checkin What level user has permission to view this page
 page_require_level(2);
 
-$loans = find_all_loan_history();
+$transfers = find_all_transfer_history();
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -19,7 +19,7 @@ $loans = find_all_loan_history();
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Histórico de Empréstimos</span>
+          <span>Histórico de Transferências</span>
         </strong>          
       </div>
       <div class="panel-body">
@@ -31,22 +31,22 @@ $loans = find_all_loan_history();
               <th> Especificações </th>
               <th class="text-center" style="width: 10%;"> Setor </th>
               <th class="text-center" style="width: 10%;"> Usuário Responsável </th>
-              <th class="text-center" style="width: 10%;"> Data do empréstimo </th>
+              <th class="text-center" style="width: 10%;"> Data da transferência </th>
               <th class="text-center" style="width: 10%;"> Recebido por </th>
               <th class="text-center" style="width: 10%;"> Recebido em </th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($loans as $loan):?>
+            <?php foreach ($transfers as $transfer):?>
               <tr>
                 <td class="text-center"><?= count_id();?></td>
-                <td class="text-center"><?= remove_junk($loan['tombo']); ?></td>
-                <td><?= remove_junk($loan['specifications']); ?></td>
-                <td class="text-center"><?= remove_junk($loan['sector']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['responsible_user']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['loan_date']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['create_user']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['created_at']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['tombo']); ?></td>
+                <td><?= remove_junk($transfer['specifications']); ?></td>
+                <td class="text-center"><?= remove_junk($transfer['sector']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['responsible_user']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['transfer_date']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['create_user']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['created_at']); ?></td>                
               </tr>
             <?php endforeach; ?>
           </tbody>

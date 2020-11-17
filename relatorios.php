@@ -15,13 +15,13 @@ if(isset($_POST['submit'])):
   $equip_tombo  = remove_junk($db->escape($_POST['equipment-tombo']));
   $equip_specifications  = remove_junk($db->escape($_POST['equipment-specifications']));
   $equip_responsible_user  = remove_junk($db->escape($_POST['equipment-responsible_user']));
-  $equip_loan  = remove_junk($db->escape($_POST['equipment-loan']));      
+  $equip_transfer  = remove_junk($db->escape($_POST['equipment-transfer']));      
   $equip_type_equip   = remove_junk($db->escape($_POST['equipment-type_equip']));
   $equip_sector  = remove_junk($db->escape($_POST['equipment-sector']));
   $equip_manufacturer   = remove_junk($db->escape($_POST['equipment-manufacturer']));
   $equip_situation  = remove_junk($db->escape($_POST['equipment-situation']));
 
-  $all_equips = issue_reports($equip_tombo, $equip_specifications, $equip_responsible_user, $equip_loan, $equip_type_equip, $equip_sector, $equip_manufacturer, $equip_situation);
+  $all_equips = issue_reports($equip_tombo, $equip_specifications, $equip_responsible_user, $equip_transfer, $equip_type_equip, $equip_sector, $equip_manufacturer, $equip_situation);
 
 
 endif;
@@ -75,10 +75,10 @@ endif;
           <div class="form-group">
             <div class="row">
               <div class="col-md-4">
-                <select id="loans" class="form-control" name="equipment-loan">
+                <select id="transfers" class="form-control" name="equipment-transfer">
                   <option value="1">Todos Equipamentos</option>
-                  <option value="2">Somente emprestados</option>
-                  <option value="3">Somente não emprestados</option>
+                  <option value="2">Somente transferidos</option>
+                  <option value="3">Somente não transferidos</option>
                 </select>
               </div>
               <div class="col-md-4">
@@ -151,7 +151,7 @@ endif;
             <th>Situação</th>
             <th>Observação</th>
             <th class="none">Término da Garantia</th>
-            <th class="none">Emprestado</th>
+            <th class="none">Transferido?</th>
           </tr>
         </thead>
         <tbody>
@@ -189,8 +189,8 @@ endif;
 <?php
 $scripts .= "
 	$('#sector').hide();
-	$('#loans').change(function(){
-	  if($('#loans').val() == 2) $('#sector').show();
+	$('#transfers').change(function(){
+	  if($('#transfers').val() == 2) $('#sector').show();
 	  else $('#sector').hide();
 	});
 "

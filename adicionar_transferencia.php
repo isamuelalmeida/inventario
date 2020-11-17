@@ -1,39 +1,39 @@
 <?php
 require_once('includes/load.php');
 
-$page_title = 'Adicionar Empréstimo';
+$page_title = 'Adicionar Transferência';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 ?>
 <?php
 
-if(isset($_POST['add_loan'])){
-  $req_fields = array('e_id','sector','responsible_user','loan_date');
+if(isset($_POST['add_transfer'])){
+  $req_fields = array('e_id','sector','responsible_user','transfer_date');
   validate_fields($req_fields);
   if(empty($errors)){
     $e_id      = $db->escape((int) $_POST['e_id']);
     $e_r_u     = $db->escape($_POST['responsible_user']);
     $e_sector  = $db->escape((int) $_POST['sector']);
-    $e_l_date      = $db->escape($_POST['loan_date']);
+    $e_t_date      = $db->escape($_POST['transfer_date']);
     $e_user_create = (int) $_SESSION['user_id'];
     $e_date_create = make_date();
 
-    $sql  = "INSERT INTO loans (";
-    $sql .= " equipment_id,responsible_user,sector_id,loan_date,created_by,created_at";
+    $sql  = "INSERT INTO transfers (";
+    $sql .= " equipment_id,responsible_user,sector_id,transfer_date,created_by,created_at";
     $sql .= ") VALUES (";
-    $sql .= "'{$e_id}','{$e_r_u}','{$e_sector}','{$e_l_date}','{$e_user_create}','{$e_date_create}'";
+    $sql .= "'{$e_id}','{$e_r_u}','{$e_sector}','{$e_t_date}','{$e_user_create}','{$e_date_create}'";
     $sql .= ")";
 
     if($db->query($sql)){
-      $session->msg('s',"Empréstimo adicionado com sucesso!");
-      redirect('adicionar_emprestimo.php', false);
+      $session->msg('s',"Transferência adicionada com sucesso!");
+      redirect('adicionar_transferencia.php', false);
     } else {
-      $session->msg('d','Desculpe, falha ao adicionar o empréstimo.');
-      redirect('adicionar_emprestimo.php', false);
+      $session->msg('d','Desculpe, falha ao adicionar o transferência');
+      redirect('adicionar_transferencia.php', false);
     }
   } else {
     $session->msg("d", $errors);
-    redirect('adicionar_emprestimo.php',false);
+    redirect('adicionar_transferencia.php',false);
   }
 }
 
@@ -62,21 +62,21 @@ if(isset($_POST['add_loan'])){
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Listar empréstimos</span>
+          <span>Adicionar transferência</span>
         </strong>
         <div class="pull-right">
-          <a href="emprestimos.php" class="btn btn-danger">Listar empréstimos</a>
+          <a href="transferencias.php" class="btn btn-danger">Listar transferência</a>
         </div>
       </div>
       <div class="panel-body">
-        <form method="post" action="adicionar_emprestimo.php">
+        <form method="post" action="adicionar_transferencia.php">
           <table class="table table-bordered">
             <thead>
               <th> Tombo </th>
               <th> Tipo de Equipamento</th>
               <th> Usuário Responsável </th>
               <th> Setor </th>
-              <th> Data do empréstimo </th>
+              <th> Data da transferência</th>
               <th> Ação</th>
             </thead>
             <tbody  id="equipment_info"> </tbody>

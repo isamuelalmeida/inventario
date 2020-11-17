@@ -6,7 +6,7 @@ $page_title = 'Dashboard';
 page_require_level(2);
 
 $c_equipment     = count_by_id('equipments');
-$c_loan       = count_by_id('loans');
+$c_transfer       = count_by_id('transfers');
 $c_sector          = count_by_id('sectors');
 $c_user          = count_by_id('users');
 
@@ -16,7 +16,7 @@ $horizontalBarChartEquipmentPerManufacturer = horizontalBarChartEquipmentPerManu
 $pieChartEquipmentPerSituation = pieChartEquipmentPerSituation();
 
 $recent_equipments    = find_recent_equipment_added('5');
-$recent_loans    = find_recent_loan_added('5');
+$recent_transfers    = find_recent_transfer_added('5');
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -57,8 +57,8 @@ $recent_loans    = find_recent_loan_added('5');
         <i class="glyphicon glyphicon-random"></i>
       </div>
       <div class="panel-value pull-right">
-        <h2 class="margin-top"> <?= $c_loan['total']; ?> </h2>
-        <p class="text-muted">Empréstimos</p>
+        <h2 class="margin-top"> <?= $c_transfer['total']; ?> </h2>
+        <p class="text-muted">Transferências</p>
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@ $recent_loans    = find_recent_loan_added('5');
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Empréstimos adicionados recentemente</span>
+          <span>Transferências feitas recentemente</span>
         </strong>
       </div>
       <div class="panel-body">
@@ -148,11 +148,11 @@ $recent_loans    = find_recent_loan_added('5');
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($recent_loans as  $recent_loan): ?>
+            <?php foreach ($recent_transfers as  $recent_transfer): ?>
               <tr>
-                <td><?= remove_junk(first_character($recent_loan['tombo'])); ?></td>
-                <td><?= remove_junk(ucfirst($recent_loan['type_equip'])); ?></td>
-                <td><?= remove_junk(first_character($recent_loan['responsible_user'])); ?></td>
+                <td><?= remove_junk(first_character($recent_transfer['tombo'])); ?></td>
+                <td><?= remove_junk(ucfirst($recent_transfer['type_equip'])); ?></td>
+                <td><?= remove_junk(first_character($recent_transfer['responsible_user'])); ?></td>
               </tr>
 
             <?php endforeach; ?>
@@ -204,7 +204,7 @@ var myChart = new Chart(ctx, {
     <?php endforeach; ?>
     ],
     datasets: [{
-      label: 'Empréstimos por Setor',
+      label: 'Transferências por Setor',
       data: [
       <?php foreach ($barChartLoansPerSector as $count_sector): ?>
         "<?= $count_sector['count'] ?>",

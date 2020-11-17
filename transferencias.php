@@ -1,11 +1,11 @@
 <?php
 require_once('includes/load.php');
 
-$page_title = 'Todos os Empréstimos';
+$page_title = 'Todas as Transferências';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 
-$loans = find_all_loan();
+$transfers = find_all_transfer();
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -19,10 +19,10 @@ $loans = find_all_loan();
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Todos os Empréstimos</span>
+          <span>Todas as Transferências</span>
         </strong>
         <div class="pull-right">
-          <a href="adicionar_emprestimo.php" class="btn btn-primary">Adicionar empréstimo</a>
+          <a href="adicionar_transferencia.php" class="btn btn-primary">Adicionar transferência</a>
         </div>
       </div>
       <div class="panel-body">
@@ -35,7 +35,7 @@ $loans = find_all_loan();
               <th class="text-center"> Tipo de Equipamento </th>
               <th class="text-center"> Setor </th>
               <th class="text-center"> Usuário Responsável </th>
-              <th class="text-center"> Data do empréstimo </th>
+              <th class="text-center"> Data da transferência </th>
               <th class="text-center none"> Criado por </th>
               <th class="text-center none"> Criado em </th>
               <th class="text-center none"> Atualizado por </th>
@@ -44,29 +44,29 @@ $loans = find_all_loan();
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($loans as $loan):?>
+            <?php foreach ($transfers as $transfer):?>
               <tr>
                 <td class="text-center"><?= count_id();?></td>
-                <td class="text-center"><?= remove_junk($loan['tombo']); ?></td>
-                <td><?= remove_junk($loan['specifications']); ?></td>
-                <td class="text-center"><?= remove_junk($loan['type_equip']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['sector']); ?></td>                
-                <td class="text-center"><?= remove_junk($loan['responsible_user']); ?></td>                
-                <td class="text-center"><?= strftime('%d/%m/%Y', strtotime($loan['loan_date'])); ?></td>
-                <td><?= remove_junk($loan['created_user']); ?></td>       
-                <td class="text-center"><?= strftime('%d/%m/%Y %H:%M', strtotime($loan['created_at'])); ?></td>                
-                <td><?= remove_junk($loan['updated_user']); ?></td>
-                <td class="text-center"><?php if(!empty($loan['updated_at'])) echo strftime('%d/%m/%Y %H:%M', strtotime($loan['updated_at'])); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['tombo']); ?></td>
+                <td><?= remove_junk($transfer['specifications']); ?></td>
+                <td class="text-center"><?= remove_junk($transfer['type_equip']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['sector']); ?></td>                
+                <td class="text-center"><?= remove_junk($transfer['responsible_user']); ?></td>                
+                <td class="text-center"><?= strftime('%d/%m/%Y', strtotime($transfer['transfer_date'])); ?></td>
+                <td><?= remove_junk($transfer['created_user']); ?></td>       
+                <td class="text-center"><?= strftime('%d/%m/%Y %H:%M', strtotime($transfer['created_at'])); ?></td>                
+                <td><?= remove_junk($transfer['updated_user']); ?></td>
+                <td class="text-center"><?php if(!empty($transfer['updated_at'])) echo strftime('%d/%m/%Y %H:%M', strtotime($transfer['updated_at'])); ?></td>                
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="editar_emprestimo.php?id=<?= (int)$loan['id'];?>" class="btn btn-xs btn-warning"  title="Editar" data-toggle="tooltip">
+                    <a href="editar_transferencia.php?id=<?= (int)$transfer['id'];?>" class="btn btn-xs btn-warning"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    <button title="Finalizar empréstimo" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#launchModal-<?= (int)$loan['id'];?>">
+                    <button title="Receber equipamento" type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#launchModal-<?= (int)$transfer['id'];?>">
                       <span class="glyphicon glyphicon-share-alt"></span>
                     </button>                    
 
-                    <?php $action="finalizar_emprestimo.php"; $id=(int)$loan['id']; include('layouts/modal-confirmacao.php'); ?>
+                    <?php $action="finalizar_transferencia.php"; $id=(int)$transfer['id']; include('layouts/modal-confirmacao.php'); ?>
                   </div>
                 </td>
               </tr>

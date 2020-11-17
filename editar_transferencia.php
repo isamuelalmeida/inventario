@@ -1,44 +1,44 @@
 <?php
 require_once('includes/load.php');
 
-$page_title = 'Editar Empréstimo';
+$page_title = 'Editar Transferência';
 // Checkin What level user has permission to view this page
 page_require_level(2);
 
 $all_sector = find_all('sectors');
 
-$loan = find_by_id('loans',(int)$_GET['id']);
-if(!$loan){
-  $session->msg("d","Empréstimo não encontrado.");
-  redirect('emprestimos.php');
+$transfer = find_by_id('transfers',(int)$_GET['id']);
+if(!$transfer){
+  $session->msg("d","Transferência não encontrada.");
+  redirect('transferencias.php');
 }
 
-$equipment = find_by_id('equipments',$loan['equipment_id']);
+$equipment = find_by_id('equipments',$transfer['equipment_id']);
 
-if(isset($_POST['update_loan'])){
-  $req_fields = array('tombo','sector','responsible_user','loan_date');
+if(isset($_POST['update_transfer'])){
+  $req_fields = array('tombo','sector','responsible_user','transfer_date');
   validate_fields($req_fields);
   if(empty($errors)){
     $e_r_u     = $db->escape($_POST['responsible_user']);
     $e_sector  = $db->escape((int) $_POST['sector']);
-    $e_l_date      = $db->escape($_POST['loan_date']);
+    $e_t_date      = $db->escape($_POST['transfer_date']);
     $e_user_update = (int) $_SESSION['user_id'];
     $e_date_update = make_date();
 
-    $sql  = "UPDATE loans SET";
-    $sql .= " responsible_user='{$e_r_u}',sector_id={$e_sector},loan_date='{$e_l_date}',updated_by={$e_user_update}, updated_at='{$e_date_update}'";
-    $sql .= " WHERE id ='{$loan['id']}'";
+    $sql  = "UPDATE transfers SET";
+    $sql .= " responsible_user='{$e_r_u}',sector_id={$e_sector},transfer_date='{$e_t_date}',updated_by={$e_user_update}, updated_at='{$e_date_update}'";
+    $sql .= " WHERE id ='{$transfer['id']}'";
     $result = $db->query($sql);
     if( $result && $db->affected_rows() === 1){
-      $session->msg('s','Empréstimo de tombo '. $equipment['tombo'] .' foi alterado com sucesso!');
-      redirect('emprestimos.php?id='.$loan['id'], false);
+      $session->msg('s','Transferência de tombo '. $equipment['tombo'] .' foi alterado com sucesso!');
+      redirect('transferencias.php?id='.$transfer['id'], false);
     } else {
-      $session->msg('d','Desculpe, falha ao alterar o empréstimo.');
-      redirect('emprestimos.php', false);
+      $session->msg('d','Desculpe, falha ao alterar a transferência.');
+      redirect('transferencias.php', false);
     }
   } else {
     $session->msg("d", $errors);
-    redirect('editar_emprestimo.php?id='.(int)$loan['id'],false);
+    redirect('editar_transferencia.php?id='.(int)$transfer['id'],false);
   }
 }
 
@@ -56,10 +56,10 @@ if(isset($_POST['update_loan'])){
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Todos os Empréstimos</span>
+          <span>Editar Transferência</span>
         </strong>
         <div class="pull-right">
-          <a href="emprestimos.php" class="btn btn-danger">Listar empréstimos</a>
+          <a href="transferencias.php" class="btn btn-danger">Listar transferências</a>
         </div>
       </div>
       <div class="panel-body">
@@ -69,12 +69,12 @@ if(isset($_POST['update_loan'])){
             <th> Especificações </th>
             <th> Usuário Responsável </th>
             <th> Setor </th>
-            <th> Data do empréstimo </th>
+            <th> Data da transferência </th>
             <th> Ação</th>
           </thead>
           <tbody  id="equipment_info">
             <tr>
-              <form method="post" action="editar_emprestimo.php?id=<?= (int)$loan['id']; ?>">
+              <form method="post" action="editar_transferencia.php?id=<?= (int)$transfer['id']; ?>">
                 <td id="e_tombo">
                   <input type="text" class="form-control" id="sug_input" name="tombo" value="<?= remove_junk($equipment['tombo']); ?>" readonly>
                   <div id="result" class="list-group"></div>
@@ -83,12 +83,12 @@ if(isset($_POST['update_loan'])){
                   <input type="text" class="form-control" name="specifications" value="<?= remove_junk($equipment['specifications']); ?>" readonly>
                 </td>
                 <td>
-                  <input type="text" class="form-control" name="responsible_user" value="<?= remove_junk($loan['responsible_user']); ?>" required>
+                  <input type="text" class="form-control" name="responsible_user" value="<?= remove_junk($transfer['responsible_user']); ?>" required>
                 </td>
                 <td>
                   <select class="form-control" name="sector" required>
                     <option value="">Selecione o Setor</option>
-                    <?php  foreach ($all_sector as $sec): if($sec['id'] == $loan['sector_id']): ?>
+                    <?php  foreach ($all_sector as $sec): if($sec['id'] == $transfer['sector_id']): ?>
                     <option selected value="<?= (int)$sec['id'] ?>"><?= $sec['name'] ?></option>
                     <?php else: ?>
                     <option value="<?= (int)$sec['id'] ?>"><?= $sec['name'] ?></option>
@@ -96,10 +96,10 @@ if(isset($_POST['update_loan'])){
                   </select>
                 </td>    
                 <td>
-                  <input type="date" class="form-control" name="loan_date" value="<?= remove_junk($loan['loan_date']); ?>" required>
+                  <input type="date" class="form-control" name="transfer_date" value="<?= remove_junk($transfer['transfer_date']); ?>" required>
                 </td>
                 <td class="text-center">
-                  <button type="submit" name="update_loan" class="btn btn-primary">Atualizar Empréstimo</button>
+                  <button type="submit" name="update_transfer" class="btn btn-primary">Atualizar Transferência</button>
                 </td>
               </form>
             </tr>

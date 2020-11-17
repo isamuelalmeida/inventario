@@ -36,11 +36,11 @@
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-random"></i>
-      <span>Empréstimos</span>
+      <span>Transferências</span>
     </a>
     <ul class="nav submenu">
-      <li><a href="emprestimos.php">Gerenciar Empréstimos</a> </li>
-      <li><a href="historico_emprestimos.php">Histórico de Empréstimos</a> </li>
+      <li><a href="transferencias.php">Gerenciar Transferências</a> </li>
+      <li><a href="historico_transferencias.php">Histórico de Transferências</a> </li>
     </ul>
   </li>
   <li>

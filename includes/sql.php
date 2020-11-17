@@ -225,7 +225,7 @@ function find_equipment_by_tombo($equipment_tombo){
   global $db;
   $e_tombo = remove_junk($db->escape($equipment_tombo));
   $sql  = "SELECT tombo FROM equipments";
-  $sql .= " WHERE id NOT IN (SELECT equipment_id FROM loans)";
+  $sql .= " WHERE id NOT IN (SELECT equipment_id FROM transfers)";
   $sql .= " AND tombo like '%$e_tombo%' LIMIT 5";
   $result = find_by_sql($sql);
   return $result;
@@ -239,7 +239,7 @@ function find_all_equipment_info_by_tombo($tombo){
   global $db;
   $sql  = "SELECT e.id,e.tombo,t_e.name AS type_equip FROM equipments e";
   $sql .= " INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
-  $sql .= " WHERE e.id NOT IN (SELECT equipment_id FROM loans)";    
+  $sql .= " WHERE e.id NOT IN (SELECT equipment_id FROM transfers)";    
   $sql .= " AND e.tombo ='{$tombo}'";
   return find_by_sql($sql);
 }
@@ -256,42 +256,42 @@ function find_recent_equipment_added($limit){
 }
 
 /*--------------------------------------------------------------*/
-/* Function for find all loans
+/* Function for find all transfers
 /*--------------------------------------------------------------*/
-function find_all_loan(){
+function find_all_transfer(){
   global $db;
-  $sql  = "SELECT l.id,l.responsible_user,l.loan_date,e.tombo,e.specifications,s.name AS sector,t_e.name AS type_equip,";
-  $sql  .=" l.created_at, u_c.name AS created_user, u_u.name AS updated_user, l.updated_at";
-  $sql .= " FROM loans l";
-  $sql .= " INNER JOIN equipments e ON e.id = l.equipment_id";
-  $sql .= " INNER JOIN sectors s ON s.id = l.sector_id";
+  $sql  = "SELECT t.id,t.responsible_user,t.transfer_date,e.tombo,e.specifications,s.name AS sector,t_e.name AS type_equip,";
+  $sql  .=" t.created_at, u_c.name AS created_user, u_u.name AS updated_user, t.updated_at";
+  $sql .= " FROM transfers t";
+  $sql .= " INNER JOIN equipments e ON e.id = t.equipment_id";
+  $sql .= " INNER JOIN sectors s ON s.id = t.sector_id";
   $sql .= " INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
-  $sql  .=" INNER JOIN users u_c ON u_c.id = l.created_by";
-  $sql  .=" LEFT JOIN users u_u ON u_u.id = l.updated_by";
-  $sql .= " ORDER BY l.created_at DESC";   
+  $sql  .=" INNER JOIN users u_c ON u_c.id = t.created_by";
+  $sql  .=" LEFT JOIN users u_u ON u_u.id = t.updated_by";
+  $sql .= " ORDER BY t.created_at DESC";   
   return find_by_sql($sql);
 }
 
 /*--------------------------------------------------------------*/
 /* Function for Display Recent Loan
 /*--------------------------------------------------------------*/
-function find_recent_loan_added($limit){
+function find_recent_transfer_added($limit){
   global $db;
-  $sql  ="SELECT l.id,l.responsible_user,l.loan_date,e.tombo,t_e.name AS type_equip";
-  $sql .= " FROM loans l";
-  $sql .= " INNER JOIN equipments e ON e.id = l.equipment_id";
+  $sql  ="SELECT t.id,t.responsible_user,t.transfer_date,e.tombo,t_e.name AS type_equip";
+  $sql .= " FROM transfers t";
+  $sql .= " INNER JOIN equipments e ON e.id = t.equipment_id";
   $sql  .=" INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id";
-  $sql .= " ORDER BY l.created_at DESC LIMIT ".$db->escape((int)$limit);
+  $sql .= " ORDER BY t.created_at DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
 
 /*--------------------------------------------------------------*/
-/* Function for find all loan history
+/* Function for find all transfer history
 /*--------------------------------------------------------------*/
-function find_all_loan_history(){
+function find_all_transfer_history(){
   global $db;
-  $sql  = "SELECT l_h.id,l_h.responsible_user,l_h.loan_date,l_h.created_at,e.tombo,e.specifications,s.name AS sector,u.name AS create_user";
-  $sql .= " FROM loan_historys l_h";
+  $sql  = "SELECT l_h.id,l_h.responsible_user,l_h.transfer_date,l_h.created_at,e.tombo,e.specifications,s.name AS sector,u.name AS create_user";
+  $sql .= " FROM transfer_historys l_h";
   $sql .= " INNER JOIN equipments e ON e.id = l_h.equipment_id";
   $sql .= " INNER JOIN sectors s ON s.id = l_h.sector_id";
   $sql .= " INNER JOIN users u ON u.id = l_h.created_by";
@@ -304,38 +304,38 @@ function find_all_loan_history(){
 /*--------------------------------------------------------------*/
 /* Reports: Function to issue reports
 /*--------------------------------------------------------------*/
-function issue_reports($tombo, $specifications, $responsible_user, $loan, $type_equip, $sector, $manufacturer, $situation){
+function issue_reports($tombo, $specifications, $responsible_user, $transfer, $type_equip, $sector, $manufacturer, $situation){
   global $db;
-  $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
-  LEFT JOIN loans l ON l.equipment_id = e.id 
-  LEFT JOIN sectors s ON s.id = l.sector_id 
+  $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,t.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
+  LEFT JOIN transfers t ON t.equipment_id = e.id 
+  LEFT JOIN sectors s ON s.id = t.sector_id 
   INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
   INNER JOIN situations sit ON sit.id = e.situation_id 
   INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id WHERE e.id ";
 
   // Search for equipments in the category of "Somente Emprestados"
-  if($loan === "2"){
-    $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,l.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
-    INNER JOIN loans l ON l.equipment_id = e.id 
-    INNER JOIN sectors s ON s.id = l.sector_id 
+  if($transfer === "2"){
+    $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,t.responsible_user,s.name AS sector,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
+    INNER JOIN transfers t ON t.equipment_id = e.id 
+    INNER JOIN sectors s ON s.id = t.sector_id 
     INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
     INNER JOIN situations sit ON sit.id = e.situation_id 
     INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id WHERE e.id ";
 
   // Search for equipments in the category of "Somente não Emprestados"
-  } elseif($loan === "3") {
+  } elseif($transfer === "3") {
     $sql  = "SELECT e.tombo,e.specifications,e.obs,e.warranty,m.name AS manufacturer,sit.name AS situation,t_e.name AS types_equip FROM equipments e 
     INNER JOIN manufacturers m ON m.id = e.manufacturer_id 
     INNER JOIN situations sit ON sit.id = e.situation_id 
     INNER JOIN types_equips t_e ON t_e.id = e.types_equip_id 
-    WHERE e.id NOT IN (SELECT equipment_id FROM loans) ";
+    WHERE e.id NOT IN (SELECT equipment_id FROM transfers) ";
   }
 
   if(!empty($tombo)) $sql .= " AND e.tombo LIKE '%$tombo%'";
   if(!empty($specifications)) $sql .= " AND e.specifications LIKE '%$specifications%'";
-  if(!empty($responsible_user) && $loan !== "3") $sql .= " AND l.responsible_user LIKE '%$responsible_user%'";
+  if(!empty($responsible_user) && $transfer !== "3") $sql .= " AND t.responsible_user LIKE '%$responsible_user%'";
   if(!empty($type_equip)) $sql .= " AND e.types_equip_id = '$type_equip'";
-  if(!empty($sector) && $loan !== "3") $sql .= " AND l.sector_id = $sector";
+  if(!empty($sector) && $transfer !== "3") $sql .= " AND t.sector_id = $sector";
   if(!empty($manufacturer)) $sql .= " AND e.manufacturer_id = '$manufacturer'";
   if(!empty($situation)) $sql .= " AND e.situation_id = '$situation'";
 
@@ -357,7 +357,7 @@ function pieChartEquipmentPerTyperEquip(){
 /*--------------------------------------------------------------*/
 function barChartLoanPerSector(){
   global $db;
-  $sql = "SELECT COUNT(l.sector_id) AS count, s.name FROM loans l INNER JOIN sectors s ON s.id = l.sector_id GROUP BY l.sector_id";
+  $sql = "SELECT COUNT(t.sector_id) AS count, s.name FROM transfers t INNER JOIN sectors s ON s.id = t.sector_id GROUP BY t.sector_id";
   return find_by_sql($sql);
 }
 

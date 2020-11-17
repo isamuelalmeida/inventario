@@ -17,7 +17,7 @@ if(isset($_POST['equipment_tombo']) && strlen($_POST['equipment_tombo']))
   } else {
 
     $html .= '<li onClick=\"fill(\''.addslashes().'\')\" class=\"list-group-item\">';
-    $html .= 'Tombo não encontrado ou este equipamento já foi emprestado.';
+    $html .= 'Tombo não encontrado ou este equipamento já foi transferido.';
     $html .= "</li>";
 
   }
@@ -55,18 +55,18 @@ if(isset($_POST['e_tombo']) && strlen($_POST['e_tombo']))
       $html  .= "</td>";
 
       $html  .= "<td>";
-      $html  .= "<input type=\"date\" class=\"form-control\" name=\"loan_date\" required>";
+      $html  .= "<input type=\"date\" class=\"form-control\" name=\"transfer_date\" required>";
       $html  .= "</td>";
 
       $html  .= "<td>";
-      $html  .= "<button type=\"submit\" name=\"add_loan\" class=\"btn btn-primary\">Registrar Empréstimo</button>";
+      $html  .= "<button type=\"submit\" name=\"add_transfer\" class=\"btn btn-primary\">Registrar Transferência</button>";
       $html  .= "</td>";
 
       $html  .= "</tr>";
 
     }
   } else {
-    $html ='<tr><td>Tombo não encontrado ou este equipamento já foi emprestado.</td></tr>';
+    $html ='<tr><td>Tombo não encontrado ou este equipamento já foi transferido.</td></tr>';
   }
 
   echo json_encode($html);

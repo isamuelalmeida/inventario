@@ -62,7 +62,7 @@ if(isset($_POST['update_equipment'])){
     <div class="panel-heading clearfix">
       <strong>
         <span class="glyphicon glyphicon-th"></span>
-        <span>Adicionar Novo Equipamento</span>
+        <span>Editar Equipamento</span>
       </strong>
       <div class="pull-right">
         <a href="equipamentos.php" class="btn btn-danger">Listar equipamentos</a>
